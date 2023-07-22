@@ -1,8 +1,12 @@
+import React from 'react';
+import './App.css';
+import ModalAdd from "./pages/modalAdd";
+import { BrowserRouter } from 'react-router-dom';
 const App = () => {
   return (
-    <>
-      <h1>아무거나</h1>
-    </>
+    <BrowserRouter>
+     <ModalAdd/>
+    </BrowserRouter>
   );
 };
 
