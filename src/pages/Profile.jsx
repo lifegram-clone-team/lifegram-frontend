@@ -1,8 +1,8 @@
-import React from "react";
-import { styled } from "styled-components";
-import ProfileUser from "../components/ProfileUser";
-import ProfileLine from "../components/ProfileLine";
-import ProfilePosts from "../components/ProfilePosts";
+import React from 'react';
+import { styled } from 'styled-components';
+import ProfileUser from '../components/ProfileUser';
+import ProfileLine from '../components/ProfileLine';
+import ProfilePosts from '../components/ProfilePosts';
 
 const Profile = () => {
   return (
