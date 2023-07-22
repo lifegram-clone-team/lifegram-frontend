@@ -1,7 +1,8 @@
+import Router from './routes/Router';
 const App = () => {
   return (
     <>
-      <h1>아무거나</h1>
+      <Router />
     </>
   );
 };
