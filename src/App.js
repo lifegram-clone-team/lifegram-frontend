@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import ModalAdd from "./pages/modalAdd";
-import { BrowserRouter } from 'react-router-dom';
+import Nav from './routes/Nav';
+
 const App = () => {
   return (
-    <BrowserRouter>
-     <ModalAdd/>
-    </BrowserRouter>
+    <>
+        <Nav />
+    </>
   );
 };
 
