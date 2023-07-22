@@ -1,12 +1,12 @@
-import React from "react";
-import { styled } from "styled-components";
-import { FiGrid } from "react-icons/fi";
+import React from 'react';
+import { styled } from 'styled-components';
+import { FiGrid } from 'react-icons/fi';
 
 const ProfileLine = () => {
   return (
     <ProfileLineContainer>
-      <div className="line"></div>
-      <div className="select">
+      <div className='line'></div>
+      <div className='select'>
         <FiGrid />
         <p>게시물</p>
       </div>

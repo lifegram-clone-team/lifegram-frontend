@@ -1,5 +1,4 @@
-import Nav from "./routes/Nav";
-
+import Nav from './routes/Nav';
 
 const App = () => {
   return (
