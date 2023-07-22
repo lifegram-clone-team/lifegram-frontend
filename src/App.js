@@ -1,7 +1,10 @@
+import Nav from "./routes/Nav";
+
+
 const App = () => {
   return (
     <>
-      <h1>아무거나</h1>
+      <Nav />
     </>
   );
 };
