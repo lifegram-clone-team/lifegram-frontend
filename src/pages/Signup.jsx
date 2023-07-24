@@ -1,12 +1,66 @@
 import { styled } from 'styled-components';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import leftImg from '../assets/image/signLeftImg.png';
 import Instagram from '../assets/image/instagram-logo.png';
 import Input from '../components/common/intput/Input';
 import Button from '../components/common/button/Button';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    userName: '',
+  });
+  const { email, password, userName } = formData;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    const regExEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const regExPassword = /^[a-zA-Z0-9]{8,16}$/;
+    const regExUserName = /^[a-zA-Z0-9_]{5,12}$/;
+
+    // 이메일 유효성 검사
+    if (!regExEmail.test(email)) {
+      alert('올바른 이메일 형식이 아닙니다.');
+      return;
+    }
+    // 사용자 이름 유효성 검사
+    if (!regExUserName.test(userName)) {
+      alert(
+        '사용자 이름은 영문, 숫자, 밑줄(_)로 5자 이상 12자 이하로 작성해야 합니다.'
+      );
+      return;
+    }
+    // 비밀번호 유효성 검사
+    if (!regExPassword.test(password)) {
+      alert(
+        '비밀번호는 영문 대소문자, 숫자로 8자 이상 16자 이하로 작성해야 합니다.'
+      );
+      return;
+    }
+    // 유효성 검사를 통과한 경우, 새로운 사용자 정보를 생성하여 서버에 전송
+    try {
+      await axios
+        .post('https://four-cut.store/api/auth/signup', formData)
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.error('사용자 생성 오류:', error);
+    }
+  };
+
   return (
     <LoginWrapper>
       <Left>
@@ -18,19 +72,38 @@ const Signup = () => {
           alt="rasm"
           style={{ width: '150px', height: '40px' }}
         />
-        <Form>
-          <Input placeholder="이메일 주소" />
-          <Input placeholder="비밀번호" /> <br />
-          <Button>로그인</Button>
-          <BtnBottom>
-            <div></div>
-            또는
-            <div></div>
-          </BtnBottom>
-          <p>
+        <Form onSubmit={onSubmitHandler}>
+          <h3>친구들의 사진과 동영상을 보려면 가입하세요.</h3>
+          <LoginBtn>
             계정이 있으신가요?
-            <span onClick={() => navigate('/register')}>가입하기</span>
-          </p>
+            <Pnext onClick={() => navigate('/register')}>로그인</Pnext>
+          </LoginBtn>
+          <Input
+            name="email"
+            value={email}
+            type="email"
+            placeholder="이메일 주소"
+            onChange={handleChange}
+          />
+          <Input
+            name="userName"
+            value={userName}
+            type="text"
+            placeholder="닉네임"
+            onChange={handleChange}
+          />
+          <Input
+            name="password"
+            value={password}
+            type="password"
+            placeholder="비밀번호"
+            onChange={handleChange}
+          />
+          <span>
+            저희 서비스를 이용하는 사람이 회원님의 연락처 정보를 Instagram에
+            업로드했을 수도 있습니다. 더 알아보기
+          </span>
+          <Button type="submit">가입</Button>
         </Form>
       </Right>
     </LoginWrapper>
@@ -66,7 +139,7 @@ const Right = styled.div`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
   border-radius: 10px;
   width: 374px;
-  height: 420px;
+  height: 520px;
   display: flex;
   flex-direction: column;
   img {
@@ -78,32 +151,32 @@ const Right = styled.div`
   }
 `;
 const Form = styled.form`
-  margin-top: 30px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   gap: 6px;
-  p {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
+  span {
+    font-size: 12px;
+    width: 330px;
+    text-align: center;
+    margin: 10px 0px 10px 0px;
   }
-  p > span {
-    color: #0095f6;
-    cursor: pointer;
+  h3 {
+    width: 268px;
+    font-size: 17px;
+    text-align: center;
+    color: #737373;
   }
 `;
-const BtnBottom = styled.div`
-  width: 320px;
+const Pnext = styled.div`
+  color: #0095f6;
+  cursor: pointer;
+`;
+const LoginBtn = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 20px;
   align-items: center;
-  margin-top: 20px;
-  div {
-    border-bottom: 0.1px solid black;
-    width: 120px;
-  }
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
 `;
