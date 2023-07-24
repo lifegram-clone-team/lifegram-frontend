@@ -20,7 +20,7 @@ const Header = () => {
           <BsInstagram className="bigWidth" />
         </HeaderLogo>
         <HeaderList>
-          <SNavLink to="/">
+          <SNavLink to="/main">
             <GoHome className="noneActiveIcon" />
             <GoHomeFill className="activeIcon" />
             <p className="smallWidth">홈</p>

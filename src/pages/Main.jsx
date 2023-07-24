@@ -155,8 +155,8 @@ const Main = () => {
       <MainHeader>
         {Array(3)
           .fill()
-          .map((_) => (
-            <PostSkeleton />
+          .map((_, index) => (
+            <PostSkeleton key={index} />
           ))}
         {post.map((post) => (
           <MainPost key={post.postId} post={post} />
