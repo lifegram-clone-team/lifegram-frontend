@@ -3,7 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import Header from '../components/common/Header';
 import Profile from '../pages/Profile';
 import DetailModal from '../components/detail/DetailModal';
-import ModalAdd from '../pages/modalAdd';
+import ModalAdd from '../components/add/ModalAdd';
+
+
 
 const Nav = () => {
   return (
