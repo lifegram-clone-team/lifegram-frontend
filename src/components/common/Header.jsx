@@ -1,42 +1,42 @@
-import React from 'react';
-import { GoHome, GoHomeFill } from 'react-icons/go';
-import { AiOutlinePlusSquare } from 'react-icons/ai';
-import { BiLogOut } from 'react-icons/bi';
-import { BsInstagram } from 'react-icons/bs';
-import InstaGram from '../../assets/instagram.svg';
-import { styled } from 'styled-components';
-import { NavLink, Outlet } from 'react-router-dom';
+import React from "react";
+import { GoHome, GoHomeFill } from "react-icons/go";
+import { AiOutlinePlusSquare } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
+import { BsInstagram } from "react-icons/bs";
+import InstaGram from "../../assets/instagram.svg";
+import { styled } from "styled-components";
+import { NavLink, Outlet } from "react-router-dom";
 
 const Header = () => {
   const apiUser = {
     imgUrl:
-      'https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9nfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
+      "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9nfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
   };
   return (
     <PageContainer>
       <HeaderContainer>
         <HeaderLogo>
-          <img src={InstaGram} className='smallWidth' />
-          <BsInstagram className='bigWidth' />
+          <img src={InstaGram} className="smallWidth" />
+          <BsInstagram className="bigWidth" />
         </HeaderLogo>
         <HeaderList>
-          <SNavLink to='main'>
-            <GoHome className='noneActiveIcon' />
-            <GoHomeFill className='activeIcon' />
-            <p className='smallWidth'>홈</p>
+          <SNavLink to="/main">
+            <GoHome className="noneActiveIcon" />
+            <GoHomeFill className="activeIcon" />
+            <p className="smallWidth">홈</p>
           </SNavLink>
-          <SNavLink to='/make'>
+          <SNavLink to="/make">
             <AiOutlinePlusSquare />
-            <p className='smallWidth'>만들기</p>
+            <p className="smallWidth">만들기</p>
           </SNavLink>
-          <SNavLink to='/profile'>
+          <SNavLink to="/profile">
             <img src={apiUser.imgUrl} />
-            <p className='smallWidth'>프로필</p>
+            <p className="smallWidth">프로필</p>
           </SNavLink>
         </HeaderList>
         <HeaderLogout>
           <BiLogOut />
-          <p className='smallWidth'>로그아웃</p>
+          <p className="smallWidth">로그아웃</p>
         </HeaderLogout>
       </HeaderContainer>
       <Outlet />

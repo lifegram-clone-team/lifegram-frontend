@@ -1,18 +1,18 @@
-import { styled } from 'styled-components';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import leftImg from '../assets/image/signLeftImg.png';
-import Instagram from '../assets/image/instagram-logo.png';
-import Input from '../components/common/intput/Input';
-import Button from '../components/common/button/Button';
-import axios from 'axios';
+import { styled } from "styled-components";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import leftImg from "../assets/image/signLeftImg.png";
+import Instagram from "../assets/image/instagram-logo.png";
+import Input from "../components/common/intput/Input";
+import Button from "../components/common/button/Button";
+import axios from "axios";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    userName: '',
+    email: "",
+    password: "",
+    userName: "",
   });
   const { email, password, userName } = formData;
 
@@ -32,32 +32,33 @@ const Signup = () => {
 
     // 이메일 유효성 검사
     if (!regExEmail.test(email)) {
-      alert('올바른 이메일 형식이 아닙니다.');
+      alert("올바른 이메일 형식이 아닙니다.");
       return;
     }
     // 사용자 이름 유효성 검사
     if (!regExUserName.test(userName)) {
       alert(
-        '사용자 이름은 영문, 숫자, 밑줄(_)로 5자 이상 12자 이하로 작성해야 합니다.'
+        "사용자 이름은 영문, 숫자, 밑줄(_)로 5자 이상 12자 이하로 작성해야 합니다."
       );
       return;
     }
     // 비밀번호 유효성 검사
     if (!regExPassword.test(password)) {
       alert(
-        '비밀번호는 영문 대소문자, 숫자로 8자 이상 16자 이하로 작성해야 합니다.'
+        "비밀번호는 영문 대소문자, 숫자로 8자 이상 16자 이하로 작성해야 합니다."
       );
       return;
     }
     // 유효성 검사를 통과한 경우, 새로운 사용자 정보를 생성하여 서버에 전송
     try {
       await axios
-        .post('https://four-cut.store/api/auth/signup', formData)
+        .post("https://four-cut.store/api/auth/signup", formData)
         .then((res) => {
           console.log(res);
+          navigate("/");
         });
     } catch (error) {
-      console.error('사용자 생성 오류:', error);
+      console.error("사용자 생성 오류:", error);
     }
   };
 
@@ -70,13 +71,13 @@ const Signup = () => {
         <img
           src={Instagram}
           alt="rasm"
-          style={{ width: '150px', height: '40px' }}
+          style={{ width: "150px", height: "40px" }}
         />
         <Form onSubmit={onSubmitHandler}>
           <h3>친구들의 사진과 동영상을 보려면 가입하세요.</h3>
           <LoginBtn>
             계정이 있으신가요?
-            <Pnext onClick={() => navigate('/register')}>로그인</Pnext>
+            <Pnext onClick={() => navigate("/register")}>로그인</Pnext>
           </LoginBtn>
           <Input
             name="email"
