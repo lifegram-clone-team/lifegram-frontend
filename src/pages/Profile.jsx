@@ -1,8 +1,8 @@
-import React from 'react';
-import { styled } from 'styled-components';
-import ProfileUser from '../components/ProfileUser';
-import ProfileLine from '../components/ProfileLine';
-import ProfilePosts from '../components/ProfilePosts';
+import React from "react";
+import { styled } from "styled-components";
+import ProfileUser from "../components/profile/ProfileUser";
+import ProfileLine from "../components/profile/ProfileLine";
+import ProfilePosts from "../components/profile/ProfilePosts";
 
 const Profile = () => {
   return (
@@ -40,7 +40,7 @@ const ProfileContainer = styled.div`
   padding: 30px 20px 0 20px;
   margin: 0 auto;
   @media (max-width: 1200px) {
-    width: 90%;
+    width: 95%;
     padding: 0;
   }
 `;
