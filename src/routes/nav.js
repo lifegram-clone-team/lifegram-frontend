@@ -8,6 +8,7 @@ import ModalAdd from '../components/add/ModalAdd';
 
 
 const Nav = () => {
+  //네비게이션
   return (
     <Routes>
       <Route path='/' element={<Header />}>
