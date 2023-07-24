@@ -2,14 +2,13 @@
  margin:0;
  padding:0;
  box-sizing:border-box;
+}
  ol,
  ul{
   list-style:none;
  }
- p,
- a{text-decoration:none;}
+ p,a{text-decoration:none;}
  body{
   font-size:14px;
   font-family: 'Roboto', sans-serif;
  }
-}

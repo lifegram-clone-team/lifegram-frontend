@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 const URL = process.env.REACT_APP_API_URI;
 const token = localStorage.getItem('accessToken');
@@ -21,13 +22,15 @@ const createPost = async (newPost) => {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     },
-    data: newPost,
+  data: newPost,
     // withCredentials: true,
   })
     .then((res) => {
       if (res.status === 200) {
         alert('게시글이 작성됐어요');
+        Navigate("/");
       }
     })
     .catch((err) => console.log(err));
