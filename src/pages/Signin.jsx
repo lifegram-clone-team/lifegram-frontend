@@ -43,7 +43,7 @@ const Signin = () => {
       await axios
         .post('https://four-cut.store/api/auth/login', formData)
         .then((res) => console.log(res));
-      navigate('/home');
+      navigate('/detail');
     } catch (error) {
       console.error('Error creating user:', error);
     }
