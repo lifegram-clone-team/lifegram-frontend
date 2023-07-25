@@ -16,7 +16,7 @@ const DetailModal = ({ postId, onClickOpenModal }) => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: deleteMutation } = useMutation(() => deletePost(), {
+  const { mutate: deleteMutation } = useMutation(() => deletePost(postId), {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
     },
@@ -45,7 +45,7 @@ const DetailModal = ({ postId, onClickOpenModal }) => {
         <StPost>
           <StModify>
             <div className='modify'>수정</div>
-            <div className='delete' onClick={() => onClickDeletePost()}>
+            <div className='delete' onClick={() => onClickDeletePost(postId)}>
               삭제
             </div>
           </StModify>
@@ -60,7 +60,7 @@ const DetailModal = ({ postId, onClickOpenModal }) => {
           />
           {data &&
             data.comments?.map((comment) => {
-              return <CommentContainer key={comment.commentId} comment={comment} />;
+              return <CommentContainer key={comment.commentId} comment={comment} postId={postId} />;
             })}
           <DetailFooter
             like={data.like}

@@ -3,10 +3,11 @@ import { useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
 import { deleteComment } from '../../api/api';
 
-const CommentContainer = ({ comment }) => {
+const CommentContainer = ({ comment, postId }) => {
+  console.log(comment);
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(() => deleteComment(), {
+  const { mutate } = useMutation(() => deleteComment(postId, comment.commentId), {
     onSuccess: () => {
       queryClient.invalidateQueries('comments');
     },
@@ -27,7 +28,7 @@ const CommentContainer = ({ comment }) => {
         </StProfile>
         <StTimeDelete>
           <div className='time'>{comment.createdAt}</div>
-          <span className='delete' onClick={() => onClickDeleteComment()}>
+          <span className='delete' onClick={() => onClickDeleteComment(postId, comment.commentId)}>
             삭제
           </span>
         </StTimeDelete>
