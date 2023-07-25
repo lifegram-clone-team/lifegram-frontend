@@ -1,22 +1,53 @@
 import React, { useState } from "react";
 import { BsHeart, BsHeartFill, BsChat } from "react-icons/bs";
 import { styled } from "styled-components";
+import { createComment } from "../../api/api";
+import { useMutation, useQueryClient } from "react-query";
 
-const MainPostBottom = ({ isLike, likeCount, postId, content }) => {
+const MainPostBottom = ({ like, likeCount, postId, content }) => {
   const [isShowMore, setIsShowMore] = useState(false);
+  const [comment, setComment] = useState("");
+  const queryClient = useQueryClient();
+
+  // 댓글생성
+  const { mutate: createCommentMutate } = useMutation(
+    () => createComment(postId, comment),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("comments");
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
+
   const changeLikeCount =
     likeCount >= 10000 ? `${likeCount / 10000}만` : likeCount;
 
   const showMoreClickHandler = () => {
     setIsShowMore(!isShowMore);
   };
+
+  const onChangeHandler = (e) => {
+    setComment(e.target.value);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (comment.trim() !== "") {
+      createCommentMutate();
+      setComment("");
+    }
+  };
+
   return (
     <MainPostLikeWrap>
-      <MainPostIcons islike={isLike.toString()}>
+      <MainPostIcons like={like.toString()}>
         <BsHeart className="isLikeNo" />
-        <BsHeartFill className="isLikeYes" islike={isLike.toString()} />
+        <BsHeartFill className="isLikeYes" />
         {/* styled-components true, false 사용 오류 */}
-        <BsChat />
+        <BsChat className="chatIcon" />
       </MainPostIcons>
       <MainPostLikeLength>
         <p>좋아요 {changeLikeCount}개</p>
@@ -38,9 +69,17 @@ const MainPostBottom = ({ isLike, likeCount, postId, content }) => {
         )}
         <div className="commentsLength">댓글 3개 모두 보기</div>
       </MainPostContent>
-      <MainComment commentlength={content.length}>
-        <CommentInput placeholder="댓글달기..." />
-        <button commentlength={content.length}>게시</button>
+      <MainComment commentlength={content.length} onSubmit={submitHandler}>
+        <CommentInput
+          placeholder="댓글달기..."
+          value={comment}
+          onChange={onChangeHandler}
+        />
+        {comment && (
+          <button commentlength={content.length} type="submit">
+            게시
+          </button>
+        )}
       </MainComment>
       <div className="mainPostLine" />
     </MainPostLikeWrap>
@@ -64,11 +103,19 @@ const MainPostIcons = styled.div`
   .isLikeYes {
     color: red;
     padding: 8px 8px 8px 0;
-    display: ${({ islike }) => (islike === "true" ? "unset" : "none")};
+    display: ${({ like }) => (like === "true" ? "unset" : "none")};
   }
   .isLikeNo {
     padding: 8px 8px 8px 0;
-    display: ${({ islike }) => (islike === "true" ? "none" : "unset")};
+    display: ${({ like }) => (like === "true" ? "none" : "unset")};
+    &:hover {
+      color: #848484;
+    }
+  }
+  .chatIcon {
+    &:hover {
+      color: #848484;
+    }
   }
 `;
 const MainPostLikeLength = styled.div`
@@ -96,7 +143,11 @@ const MainComment = styled.form`
     all: unset;
     font-weight: bold;
     color: #0095f6;
+    margin-left: 10px;
     display: ${({ commentlength }) => (commentlength >= 1 ? "unset" : "none")};
+    &:hover {
+      cursor: pointer;
+    }
   }
 `;
 const CommentInput = styled.input`
