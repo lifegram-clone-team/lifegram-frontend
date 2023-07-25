@@ -6,8 +6,6 @@ import DetailModal from "../components/detail/DetailModal";
 import Signup from "../pages/Signup";
 import Signin from "../pages/Signin";
 import Main from "../pages/Main";
-import ModalAdd from "../components/add/ModalAdd";
-import AddPost from "../pages/AddPost";
 
 const Nav = () => {
   return (
@@ -19,7 +17,6 @@ const Nav = () => {
         <Route path="main" element={<Main />} />
       </Route>
       <Route path="/detail" element={<DetailModal />} />
-      <Route path="/add" element={<AddPost />} />
     </Routes>
   );
 };
