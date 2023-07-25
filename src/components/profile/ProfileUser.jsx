@@ -1,27 +1,25 @@
 import React, { useEffect } from "react";
 import { styled } from "styled-components";
 import { getUserInfo } from "../../api/api";
+import { useQuery } from "react-query";
 
 const ProfileUser = () => {
-  const apiUser = {
-    userName: "lee_so_hyeon",
-    imgUrl:
-      "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9nfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    postCount: 10,
-  };
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
+  console.log(data);
   return (
-    <ProfileUserConatiner>
-      <ImgSection>
-        <img src={apiUser.imgUrl} alt="Personal Profile" />
-      </ImgSection>
-      <UserSection>
-        <div className="name">{apiUser.userName}</div>
-        <div className="postLength">게시물 {apiUser.postCount}</div>
-      </UserSection>
-    </ProfileUserConatiner>
+    <>
+      {data && (
+        <ProfileUserConatiner>
+          <ImgSection>
+            <img src={data.profileImgUrl} alt="Personal Profile" />
+          </ImgSection>
+          <UserSection>
+            <div className="name">{data.userName}</div>
+            <div className="postLength">게시물 {data.postCount}</div>
+          </UserSection>
+        </ProfileUserConatiner>
+      )}
+    </>
   );
 };
 const ProfileUserConatiner = styled.div`

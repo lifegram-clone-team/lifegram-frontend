@@ -55,8 +55,6 @@ const ProfilePosts = () => {
         "https://images.unsplash.com/photo-1566674717261-e3b344428702?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzIyfHxkb2d8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
     },
   ];
-  apiPostUser.map((post) => console.log(post.imgUrl));
-
   return (
     <ProfilePostsWrap>
       {apiPostUser.map((post) => (

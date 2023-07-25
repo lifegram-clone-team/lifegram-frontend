@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const URL = process.env.REACT_APP_API_URI;
 const token = localStorage.getItem('accessToken');
 
@@ -21,8 +20,8 @@ const loginPost = async (formData) => {
 };
 
 //전체 게시물 조회
-const getPosts = async () => {
-  const response = await axios.get(`${URL}/post?page=&pageSize=5`, {
+const getPosts = async (pageNum) => {
+  const response = await axios.get(`${URL}/post?page=${pageNum}&size=5`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -116,13 +115,15 @@ const updateEditPost = async (postId, newPost) => {
 
 // 댓글 작성
 const createComment = async (postId, newComment) => {
+  console.log(`댓글작성, id: ${postId}, newComment: ${newComment}`);
+
   await axios({
     url: `${URL}/post/${postId}/comment`,
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: newComment,
+    data: { content: newComment },
     // withCredentials: true,
   })
     .then((res) => {
@@ -157,7 +158,7 @@ const getUserInfo = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(response);
+  // console.log(response);
   return response.data;
 };
 
