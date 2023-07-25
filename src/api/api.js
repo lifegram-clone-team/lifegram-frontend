@@ -1,8 +1,7 @@
-import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import axios from "axios";
 
 const URL = process.env.REACT_APP_API_URI;
-const token = localStorage.getItem('accessToken');
+const token = localStorage.getItem("accessToken");
 
 //전체 게시물 조회
 const getPosts = async () => {
@@ -19,7 +18,7 @@ const getPosts = async () => {
 const createPost = async (newPost) => {
   await axios({
     url: `${URL}/post`,
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
@@ -29,8 +28,7 @@ const createPost = async (newPost) => {
   })
     .then((res) => {
       if (res.status === 200) {
-        alert('게시글이 작성됐어요');
-        Navigate("/");
+        alert("게시글이 작성됐어요");
       }
     })
     .catch((err) => console.log(err));
@@ -51,14 +49,14 @@ const getPostDetail = async (postId) => {
 const deletePost = async (postId) => {
   await axios({
     url: `${URL}/post/${postId}`,
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
       if (res.status === 200) {
-        alert('게시글이 삭제됐어요');
+        alert("게시글이 삭제됐어요");
       }
     })
     .catch((err) => console.log(err));
@@ -68,14 +66,14 @@ const deletePost = async (postId) => {
 const updateIsLike = async (postId) => {
   await axios({
     url: `${URL}/post/${postId}/like`,
-    method: 'PUT',
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
       if (res.status === 200) {
-        alert('좋아요 상태가 변경됐어요');
+        alert("좋아요 상태가 변경됐어요");
       }
     })
     .catch((err) => console.log(err));
@@ -85,7 +83,7 @@ const updateIsLike = async (postId) => {
 const updateEditPost = async (postId, newPost) => {
   await axios({
     url: `${URL}/post/${postId}`,
-    method: 'PUT',
+    method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -93,7 +91,7 @@ const updateEditPost = async (postId, newPost) => {
   })
     .then((res) => {
       if (res.status === 200) {
-        alert('게시글이 성공적으로 변경됐어요');
+        alert("게시글이 성공적으로 변경됐어요");
       }
     })
 
@@ -104,7 +102,7 @@ const updateEditPost = async (postId, newPost) => {
 const createComment = async (postId, newComment) => {
   await axios({
     url: `${URL}/post/${postId}/comment`,
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -113,7 +111,7 @@ const createComment = async (postId, newComment) => {
   })
     .then((res) => {
       if (res.status === 200) {
-        alert('댓글이 작성됐어요');
+        alert("댓글이 작성됐어요");
       }
     })
     .catch((err) => console.log(err));
@@ -123,14 +121,14 @@ const createComment = async (postId, newComment) => {
 const deleteComment = async (postId, commentId) => {
   await axios({
     url: `${URL}/post/${postId}/comment/${commentId}`,
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
       if (res.status === 200) {
-        alert('댓글이 삭제됐어요');
+        alert("댓글이 삭제됐어요");
       }
     })
     .catch((err) => console.log(err));
@@ -143,7 +141,7 @@ const getUserInfo = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response);
+  console.log(response);
   return response.data;
 };
 
