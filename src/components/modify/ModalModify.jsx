@@ -15,17 +15,13 @@ import { getUserInfo } from "../../api/api";
 const ModalModify = () => {
   const { id } = useParams();
   const [modifyItem] = todoList.filter((card) => card.id === id);
-
-  const [modifyImg, setModifyImg, handleImgChange] = useInput("");
-  const [addImgName, setAddImgName] = useInput("");
+  const [edited,setEdited]=useState(false)
   const [content, setContent, handleContentsChange] = useInput("");
-  const [textContents, setTextContents] = useState("");
   const [image, setImage] = useState("");
   const [inputCount, setInputCount] = useState(0);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
-  const [addUser, setAddUser] = useState(null);
   const token = localStorage.getItem("accessToken");
-  console.log(token)
+  // console.log(token)
   const navigate=useNavigate()
   const queryClient = useQueryClient();
   
