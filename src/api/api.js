@@ -1,10 +1,11 @@
 import axios from 'axios';
+
 const URL = process.env.REACT_APP_API_URI;
 const token = localStorage.getItem('accessToken');
-
 const registerPost = async (formData) => {
   try {
     const response = await axios.post(`${URL}/auth/signup`, formData);
+    localStorage.setItem('accessToken', response.data.token);
     return response;
   } catch (error) {
     throw new Error('사용자 생성 오류:', error);
@@ -13,7 +14,7 @@ const registerPost = async (formData) => {
 const loginPost = async (formData) => {
   try {
     const response = await axios.post(`${URL}/auth/login`, formData);
-    return response;
+    return response.data;
   } catch (error) {
     throw new Error('사용자 생성 오류:', error);
   }

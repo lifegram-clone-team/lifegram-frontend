@@ -25,16 +25,20 @@ const Signin = () => {
       [name]: value,
     });
   };
-  const mutation = useMutation(loginPost, {
-    onSuccess: (data) => {
-      console.log(data);
-      localStorage.setItem('accessToken', data.accessToken);
-      navigate('/main');
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const mutation = useMutation(
+    loginPost,
+
+    {
+      onSuccess: (data) => {
+        localStorage.setItem('accessToken', data.accessToken);
+        window.location.href = '/main';
+        // navigate('/main');
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    }
+  );
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { styled } from "styled-components";
-import MainPost from "../components/main/MainPost";
-import PostSkeleton from "../components/main/mainLoding/PostSkeleton";
-import { getPosts } from "../api/api.js";
-import { useQuery } from "react-query";
+import React, { useState } from 'react';
+import { styled } from 'styled-components';
+import MainPost from '../components/main/MainPost';
+import PostSkeleton from '../components/main/mainLoding/PostSkeleton';
+import { getPosts } from '../api/api.js';
+import { useQuery } from 'react-query';
 
 const Main = () => {
   const [page, setPage] = useState(1);
-  const { isLoading, error, data } = useQuery("mainPosts", () =>
+
+  const { isLoading, error, data } = useQuery('mainPosts', () =>
     getPosts(page)
   );
   console.log(data);
