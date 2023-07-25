@@ -144,7 +144,6 @@ const getUserInfo = async () => {
   // console.log(response);
   return response.data;
 };
-
 //프로필 메인 화면 자신의 게시글 목록
 const getUserPosts = async (pageNum) => {
   const response = await axios.get(`${URL}/post/user?page=${pageNum}&size=12`, {
