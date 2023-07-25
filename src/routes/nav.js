@@ -7,6 +7,7 @@ import Signup from "../pages/Signup";
 import Signin from "../pages/Signin";
 import Main from "../pages/Main";
 import AddPost from "../pages/AddPost";
+
 const Nav = () => {
   return (
     <Routes>
