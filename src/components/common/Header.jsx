@@ -5,19 +5,19 @@ import { BiLogOut } from "react-icons/bi";
 import { BsInstagram } from "react-icons/bs";
 import InstaGram from "../../assets/instagram.svg";
 import { styled } from "styled-components";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getUserInfo } from "../../api/api.js";
 
 const Header = () => {
-  const apiUser = {
-    imgUrl:
-      "https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9nfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-  };
+  const { isLoading, error, data } = useQuery("headerUserImg", getUserInfo);
+  const navigate = useNavigate();
   return (
     <PageContainer>
       <HeaderContainer>
         <HeaderLogo>
           <img src={InstaGram} className="smallWidth" />
-          <BsInstagram className="bigWidth" />
+          <BsInstagram className="bigWidth" onClick={() => navigate("/main")} />
         </HeaderLogo>
         <HeaderList>
           <SNavLink to="/main">
@@ -30,7 +30,7 @@ const Header = () => {
             <p className="smallWidth">만들기</p>
           </SNavLink>
           <SNavLink to="/profile">
-            <img src={apiUser.imgUrl} />
+            {data && <img src={data.profileImgUrl} alt="유저프로필" />}
             <p className="smallWidth">프로필</p>
           </SNavLink>
         </HeaderList>
