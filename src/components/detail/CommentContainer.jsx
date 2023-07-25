@@ -1,17 +1,36 @@
+import { useMutation } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
+import { deleteComment } from '../../api/api';
 
-const CommentContainer = ({ commentWriterImgUrl, commentWriter, commentContent, commentCreatedAt }) => {
+const CommentContainer = ({ comment }) => {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(() => deleteComment(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('comments');
+    },
+  });
+
+  const onClickDeleteComment = () => {
+    mutate();
+  };
   return (
     <StCommentContainer>
       <StProImgContainer>
-        <img src={commentWriterImgUrl} alt='writerimg' />
+        <img src={comment.writerImgUrl} alt='writerimg' />
       </StProImgContainer>
       <StCommentBody>
         <StProfile>
-          <span className='writer'>{commentWriter}</span>
-          <div>{commentContent}</div>
+          <span className='writer'>{comment.writer}</span>
+          <div>{comment.content}</div>
         </StProfile>
-        <div className='time'>{commentCreatedAt}</div>
+        <StTimeDelete>
+          <div className='time'>{comment.createdAt}</div>
+          <span className='delete' onClick={() => onClickDeleteComment()}>
+            삭제
+          </span>
+        </StTimeDelete>
       </StCommentBody>
     </StCommentContainer>
   );
@@ -23,12 +42,14 @@ const StCommentContainer = styled.div`
   display: flex;
   margin-top: 30px;
   gap: 15px;
-  /* justify-content: center;
-  align-items: center; */
+  padding-left: 15px;
+  @media (max-width: 735px) {
+    display: none;
+  }
 `;
 
 const StProImgContainer = styled.div`
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
@@ -50,8 +71,17 @@ const StProfile = styled.div`
   display: flex;
   gap: 10px;
   font-size: 16px;
+  padding-right: 15px;
+  margin-bottom: 5px;
 
   .writer {
     font-weight: 700;
   }
+`;
+
+const StTimeDelete = styled.div`
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: grey;
 `;

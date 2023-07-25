@@ -1,100 +1,153 @@
 import { styled } from 'styled-components';
 import CommentContainer from './CommentContainer';
 import ProfileContainer from './ProfileContainer';
-import { BsHeart, BsHeartFill, BsChat } from 'react-icons/bs';
+import { deletePost, getPostDetail } from '../../api/api';
+import { useMutation } from 'react-query';
+import { useQueryClient } from 'react-query';
+import DetailFooter from './DetailFooter';
 
-const DetailModal = () => {
-  const imgUrl = `https://www.allkpop.com/upload/2023/07/content/050955/1688565311-20230705-newjeans.jpg`;
-  const writer = `newjeans`;
-  const writerImgUrl = `https://biz.chosun.com/resizer/oeOznwvT58PZ0_eUSVTEp24tnMY=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosunbiz/4UW3T7CE7453JNFYEETVYHRUBM.jpg`;
-  const createdAt = `23.07.21`;
-  const content = 'NewJeans SUPER SHY 2023.7.7. 1PM (KST) RELEASE';
-  const likeCount = 5135;
-  const formatLikeCount = likeCount.toLocaleString();
-  const isLike = false;
+import { useQuery } from 'react-query';
+import ReactDom from 'react-dom';
 
-  // coment.writer
-  const commentWriter = 'junholee';
-  // coment.writerImgUrl
-  const commentWriterImgUrl = `https://dimg.donga.com/wps/SPORTS/IMAGE/2022/11/28/116722180.1.png`;
-  // coment.content
-  const commentContent = '뉴진스 화이팅~';
-  // conet.createdAt
-  const commentCreatedAt = '23.07.21';
+const DetailModal = ({ postId, onClickOpenModal }) => {
+  // const token = localStorage.getItem('accessToken');
 
-  return (
-    <StModalBg>
+  //로직 시작
+
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteMutation } = useMutation(() => deletePost(), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+    },
+  });
+  const onClickDeletePost = async () => {
+    deleteMutation();
+  };
+
+  const { isLoading, isError, data, error } = useQuery('postdetail', () => getPostDetail(postId));
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>{error}</div>;
+  }
+
+  return ReactDom.createPortal(
+    <StModal>
+      <StModalBg onClick={onClickOpenModal} />
       <StDetailModal>
         <StImgContainer>
-          <img src={imgUrl} alt='img' />
+          <img src={data.postImgUrl} alt='img' />
         </StImgContainer>
         <StPost>
-          <ProfileContainer writerImgUrl={writerImgUrl} writer={writer} />
-          <ProfileContainer writerImgUrl={writerImgUrl} writer={writer} />
-          <div className='content'>{content}</div>
-          <div className='content time'>{createdAt}</div>
-          <CommentContainer
-            commentWriterImgUrl={commentWriterImgUrl}
-            commentWriter={commentWriter}
-            commentContent={commentContent}
-            commentCreatedAt={commentCreatedAt}
+          <StModify>
+            <div className='modify'>수정</div>
+            <div className='delete' onClick={() => onClickDeletePost()}>
+              삭제
+            </div>
+          </StModify>
+          <ProfileContainer writerImgUrl={data.writerImgUrl} writer={data.writer} />
+          <hr />
+          <ProfileContainer
+            writerImgUrl={data.writerImgUrl}
+            writer={data.writer}
+            content={data.content}
+            createdAt={data.createdAt}
+            media='media'
           />
-          <StFooter>
-            <StIconContainer>
-              {isLike ? <BsHeartFill size='26' /> : <BsHeart size='26' />}
-              <BsChat size='26' />
-            </StIconContainer>
-            <div className='like'>{`좋아요 ${formatLikeCount}개`}</div>
-            <div className='time'>{commentCreatedAt}</div>
-            <input type='text' placeholder='댓글 달기...' />
-          </StFooter>
+          {data &&
+            data.comments?.map((comment) => {
+              return <CommentContainer key={comment.commentId} comment={comment} />;
+            })}
+          <DetailFooter
+            like={data.like}
+            likeCount={data.likeCount}
+            commentCreatedAt={data.commentCreatedAt}
+            id={postId}
+          />
         </StPost>
       </StDetailModal>
-    </StModalBg>
+    </StModal>,
+    document.getElementById('portal')
   );
 };
 
 export default DetailModal;
 
-const StModalBg = styled.div`
+const StModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
 `;
+const StModalBg = styled.div`
+  width: 100%;
+  height: 100vh;
+  inset: 0px;
+  position: fixed;
+  opacity: 0.65;
+  background-color: rgb(0, 0, 0);
+`;
 
 const StDetailModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 80%;
   height: 90%;
-  border: 1px solid red;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 1;
+
+  @media (max-width: 735px) {
+    flex-direction: column;
+    width: 490px;
+  }
 `;
 
 const StImgContainer = styled.div`
-  width: 65%;
+  width: 70%;
   height: 100%;
-  border: 1px solid green;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
 
   img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  @media (max-width: 735px) {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 50%;
   }
 `;
 
 const StPost = styled.div`
   position: relative;
-  width: 35%;
+  width: 30%;
+  min-width: 490px;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: baseline;
-  border: 1px solid black;
-  margin-left: 15px;
+
+  hr {
+    width: 100%;
+    background: #5d5d5d;
+    height: 1px;
+    border: 0;
+  }
 
   .content {
     padding-left: 55px;
@@ -104,34 +157,26 @@ const StPost = styled.div`
   .time {
     font-size: 13px;
     color: grey;
-  }
-`;
 
-const StFooter = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  display: flex;
-  bottom: 0px;
-
-  .like {
-    margin-top: 15px;
-    font-size: 16px;
-    font-weight: 700;
-  }
-
-  input {
-    height: 45px;
-    margin-top: 15px;
-
-    &::placeholder {
-      padding-left: 25px;
+    &.main {
+      padding-left: 15px;
     }
   }
 `;
 
-const StIconContainer = styled.div`
+const StModify = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 10px;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  color: grey;
+
+  .modify {
+    cursor: pointer;
+  }
+
+  .delete {
+    cursor: pointer;
+  }
 `;
