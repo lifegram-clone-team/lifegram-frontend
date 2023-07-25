@@ -5,7 +5,6 @@ import { useQuery } from "react-query";
 
 const ProfileUser = () => {
   const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
-  console.log(data);
   return (
     <>
       {data && (

@@ -146,13 +146,12 @@ const getUserInfo = async () => {
 };
 
 //프로필 메인 화면 자신의 게시글 목록
-const getUserPosts = async () => {
-  const response = await axios.get(`${URL}/post/user`, {
+const getUserPosts = async (pageNum) => {
+  const response = await axios.get(`${URL}/post/user?page=${pageNum}&size=12`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response);
   return response.data;
 };
 

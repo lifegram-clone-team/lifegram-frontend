@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 import { createComment } from "../../api/api";
 import { useMutation, useQueryClient } from "react-query";
 
-const MainPostBottom = ({ like, likeCount, postId, content }) => {
+const MainPostBottom = ({ like, likeCount, postId, content, commentCount }) => {
   const [isShowMore, setIsShowMore] = useState(false);
   const [comment, setComment] = useState("");
   const queryClient = useQueryClient();
@@ -21,6 +21,8 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
       },
     }
   );
+
+  
 
   const changeLikeCount =
     likeCount >= 10000 ? `${likeCount / 10000}만` : likeCount;
@@ -67,7 +69,7 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
             더 보기
           </div>
         )}
-        <div className="commentsLength">댓글 3개 모두 보기</div>
+        <div className="commentsLength">댓글 {commentCount}개 모두 보기</div>
       </MainPostContent>
       <MainComment commentlength={content.length} onSubmit={submitHandler}>
         <CommentInput
