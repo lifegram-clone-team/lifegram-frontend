@@ -4,7 +4,7 @@ import MainPost from '../components/main/MainPost';
 import PostSkeleton from '../components/main/mainLoding/PostSkeleton';
 import { getPosts } from '../api/api.js';
 import { useQuery } from 'react-query';
-
+// main page
 const Main = () => {
   const [page, setPage] = useState(1);
 
