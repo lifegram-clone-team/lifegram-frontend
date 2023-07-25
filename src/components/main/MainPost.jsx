@@ -8,14 +8,14 @@ const MainPost = ({ post }) => {
     <MainPostWrap>
       <MainPostUser
         writer={post.writer}
-        userImgUrl={post.userImgUrl}
-        updatedAt={post.updatedAt}
+        userImgUrl={post.writerImgUrl}
+        createdAt={post.createdAt}
       />
       <div className="postImg">
-        <img src={post.imgUrl} alt="사진" />
+        <img src={post.postImgUrl} alt="사진" />
       </div>
       <MainPostBottom
-        isLike={post.isLike}
+        like={post.like}
         likeCount={post.likeCount}
         postId={post.postId}
         content={post.content}
@@ -29,7 +29,7 @@ const MainPostWrap = styled.div`
   .postImg {
     img {
       width: 100%;
-      height: 470px;
+      aspect-ratio: 1/1;
       object-fit: cover;
     }
   }
@@ -37,7 +37,7 @@ const MainPostWrap = styled.div`
     width: 90%;
     .postImg {
       img {
-        height: 400px;
+        aspect-ratio: 1/1;
       }
     }
   }
