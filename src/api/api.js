@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const URL = process.env.REACT_APP_API_URI;
 const token = localStorage.getItem('accessToken');
+console.log(token);
 const registerPost = async (formData) => {
   try {
     const response = await axios.post(`${URL}/auth/signup`, formData);
