@@ -32,6 +32,7 @@ const Signin = () => {
       onSuccess: (data) => {
         localStorage.setItem('accessToken', data.accessToken);
         window.location.href = '/main';
+
         // navigate('/main');
       },
       onError: (error) => {
@@ -39,7 +40,6 @@ const Signin = () => {
       },
     }
   );
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const regExEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

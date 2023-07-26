@@ -4,8 +4,9 @@ import { styled } from 'styled-components';
 import { createComment } from '../../api/api';
 import { useMutation, useQueryClient } from 'react-query';
 import DetailModal from '../detail/DetailModal';
+import { updateIsLike } from '../../api/api';
 
-const MainPostBottom = ({ like, likeCount, postId, content }) => {
+const MainPostBottom = ({ like, likeCount, postId, content, commentCount }) => {
   const [isShowMore, setIsShowMore] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [comment, setComment] = useState('');
@@ -21,6 +22,17 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
     },
   });
 
+  //리액트쿼리 세팅
+  //좋아요 update mutate => 요청시 boolean값 조절
+  const { mutate: updateIsLikeMutation } = useMutation(() => updateIsLike(postId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+    },
+  });
+  const onClickUpdateIsLike = async () => {
+    updateIsLikeMutation();
+  };
+
   const changeLikeCount = likeCount >= 10000 ? `${likeCount / 10000}만` : likeCount;
 
   const showMoreClickHandler = () => {
@@ -28,6 +40,7 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
   };
 
   const onClickOpenModal = () => {
+    window.history.pushState(null, null, `/post/${postId}`);
     setOpenModal(!openModal);
   };
 
@@ -44,38 +57,42 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
   };
 
   return (
-    <MainPostLikeWrap>
-      <MainPostIcons like={like.toString()}>
-        <BsHeart className='isLikeNo' />
-        <BsHeartFill className='isLikeYes' />
-        {/* styled-components true, false 사용 오류 */}
-        <BsChat className='chatIcon' />
-      </MainPostIcons>
-      <MainPostLikeLength>
-        <p>좋아요 {changeLikeCount}개</p>
-      </MainPostLikeLength>
-      <MainPostContent>
-        {content.length > 25 ? (isShowMore ? content : content.slice(0, 25).padEnd(28, '.')) : content}
-        {!isShowMore && content.length > 25 && (
-          <div className='showMore' ismore={content.length} onClick={showMoreClickHandler}>
-            더 보기
-          </div>
-        )}
-        <div className='commentsLength' onClick={onClickOpenModal}>
-          댓글 3개 모두 보기
-        </div>
-        {openModal && <DetailModal postId={postId} onClickOpenModal={onClickOpenModal} />}
-      </MainPostContent>
-      <MainComment commentlength={content.length} onSubmit={submitHandler}>
-        <CommentInput placeholder='댓글달기...' value={comment} onChange={onChangeHandler} />
-        {comment && (
-          <button commentlength={content.length} type='submit'>
-            게시
-          </button>
-        )}
-      </MainComment>
-      <div className='mainPostLine' />
-    </MainPostLikeWrap>
+    <>
+      {content && (
+        <MainPostLikeWrap>
+          <MainPostIcons like={like.toString()}>
+            <BsHeart className='isLikeNo' onClick={() => onClickUpdateIsLike()} />
+            <BsHeartFill className='isLikeYes' onClick={() => onClickUpdateIsLike()} />
+            {/* styled-components true, false 사용 오류 */}
+            <BsChat className='chatIcon' />
+          </MainPostIcons>
+          <MainPostLikeLength>
+            <p>좋아요 {changeLikeCount}개</p>
+          </MainPostLikeLength>
+          <MainPostContent>
+            {content.length > 25 ? (isShowMore ? content : content.slice(0, 25).padEnd(28, '.')) : content}
+            {!isShowMore && content.length > 25 && (
+              <div className='showMore' ismore={content.length} onClick={showMoreClickHandler}>
+                더 보기
+              </div>
+            )}
+            <div className='commentsLength' onClick={onClickOpenModal}>
+              댓글 {commentCount}개 모두 보기
+            </div>
+            {openModal && <DetailModal postId={postId} setOpenModal={setOpenModal} isProf='false' />}
+          </MainPostContent>
+          <MainComment commentlength={content.length} onSubmit={submitHandler}>
+            <CommentInput placeholder='댓글달기...' value={comment} onChange={onChangeHandler} />
+            {comment && (
+              <button commentlength={content.length} type='submit'>
+                게시
+              </button>
+            )}
+          </MainComment>
+          <div className='mainPostLine' />
+        </MainPostLikeWrap>
+      )}
+    </>
   );
 };
 
@@ -92,6 +109,10 @@ const MainPostIcons = styled.div`
   svg {
     font-weight: bold;
     padding: 10px 10px 8px 10px;
+    transition: all 0.1s linear;
+    &:hover {
+      transform: scale(1.2);
+    }
   }
   .isLikeYes {
     color: red;
@@ -127,6 +148,7 @@ const MainPostContent = styled.div`
     color: #848484;
     margin-top: 8px;
     font-size: 0.9rem;
+    cursor: pointer;
   }
 `;
 const MainComment = styled.form`
