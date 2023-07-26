@@ -16,13 +16,13 @@ const Nav = () => {
       <Route element={<NotAuthRoutes user={user} />}>
         <Route path="/" element={<Signin />} />
         <Route path="/register" element={<Signup />} />
-        <Route path="/*" element={<div>404</div>} />
       </Route>
 
       <Route element={<AuthRoutes user={user} />}>
         <Route element={<Header />}>
           <Route path="/main" element={<Main />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="/post:id" element={<Profile />} />
         </Route>
       </Route>
 
