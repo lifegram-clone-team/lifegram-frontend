@@ -35,7 +35,6 @@ const getPosts = async (pageNum) => {
 
 // 게시물 작성
 const createPost = async (newPost) => {
-  console.log("게시물 작성");
   await axios({
     url: `${URL}/post`,
     method: "POST",
@@ -55,7 +54,6 @@ const createPost = async (newPost) => {
 
 // 게시물 상세 조회
 const getPostDetail = async (postId) => {
-  console.log("게시물 상세조회");
   const response = await axios.get(`${URL}/post/${postId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -67,7 +65,6 @@ const getPostDetail = async (postId) => {
 
 // 게시물 삭제
 const deletePost = async (postId) => {
-  console.log("게시물 삭제");
   console.log("deletePost postId=", postId);
   await axios({
     url: `${URL}/post/${postId}`,
@@ -86,8 +83,7 @@ const deletePost = async (postId) => {
 
 // 좋아요 변경
 const updateIsLike = async (postId) => {
-  console.log("게시물 좋아요");
-  await axios({
+ await axios({
     url: `${URL}/post/${postId}/like`,
     method: "PUT",
     headers: {
@@ -102,9 +98,9 @@ const updateIsLike = async (postId) => {
     .catch((err) => console.log(err));
 };
 
+
 // 게시글 수정
 const updateEditPost = async (postId, newPost) => {
-  console.log("게시물 수정");
   await axios({
     url: `${URL}/post/${postId}`,
     method: "PUT",
@@ -124,7 +120,6 @@ const updateEditPost = async (postId, newPost) => {
 
 // 댓글 작성
 const createComment = async (postId, newComment) => {
-  console.log("게시물 댓글작성");
   console.log(`댓글작성, id: ${postId}, newComment: ${newComment}`);
 
   await axios({
@@ -146,7 +141,6 @@ const createComment = async (postId, newComment) => {
 
 // 댓글 삭제
 const deleteComment = async (postId, commentId) => {
-  console.log("게시물 댓글 삭제");
   console.log("deleteComment commentId=", commentId);
   await axios({
     url: `${URL}/post/${postId}/comment/${commentId}`,
@@ -165,7 +159,6 @@ const deleteComment = async (postId, commentId) => {
 
 // 프로필 메인 화면 유저 정보
 const getUserInfo = async () => {
-  console.log("프로필 메안 화면 유저 정보");
   const response = await axios.get(`${URL}/user`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -176,13 +169,15 @@ const getUserInfo = async () => {
 };
 
 //프로필 메인 화면 자신의 게시글 목록
-const getUserPosts = async (pageNum) => {
-  console.log("프로필 메인 화면 자신의 게시글 목록");
-  const response = await axios.get(`${URL}/post/user?page=${pageNum}&size=12`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+const getUserPosts = async (pageNum, size = 12) => {
+  const response = await axios.get(
+    `${URL}/post/user?page=${pageNum}&size=${size}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   // console.log(response);
   return response.data;
 };
