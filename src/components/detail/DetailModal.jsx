@@ -5,7 +5,7 @@ import { deletePost, getPostDetail } from '../../api/api';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import DetailFooter from './DetailFooter';
-
+import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import ReactDom from 'react-dom';
 
@@ -44,7 +44,9 @@ const DetailModal = ({ postId, onClickOpenModal }) => {
         </StImgContainer>
         <StPost>
           <StModify>
+           <Link to={`/modify/${postId}`}>
             <div className='modify'>수정</div>
+            </Link>
             <div className='delete' onClick={() => onClickDeletePost(postId)}>
               삭제
             </div>
