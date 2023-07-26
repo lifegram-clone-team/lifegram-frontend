@@ -40,7 +40,7 @@ const MainPostBottom = ({ like, likeCount, postId, content, commentCount }) => {
   };
 
   const onClickOpenModal = () => {
-    window.history.pushState(null, null, `/${postId}`);
+    window.history.pushState(null, null, `/post/${postId}`);
     setOpenModal(!openModal);
   };
 
@@ -57,38 +57,42 @@ const MainPostBottom = ({ like, likeCount, postId, content, commentCount }) => {
   };
 
   return (
-    <MainPostLikeWrap>
-      <MainPostIcons like={like.toString()}>
-        <BsHeart className='isLikeNo' onClick={() => onClickUpdateIsLike()} />
-        <BsHeartFill className='isLikeYes' onClick={() => onClickUpdateIsLike()} />
-        {/* styled-components true, false 사용 오류 */}
-        <BsChat className='chatIcon' />
-      </MainPostIcons>
-      <MainPostLikeLength>
-        <p>좋아요 {changeLikeCount}개</p>
-      </MainPostLikeLength>
-      <MainPostContent>
-        {content.length > 25 ? (isShowMore ? content : content.slice(0, 25).padEnd(28, '.')) : content}
-        {!isShowMore && content.length > 25 && (
-          <div className='showMore' ismore={content.length} onClick={showMoreClickHandler}>
-            더 보기
-          </div>
-        )}
-        <div className='commentsLength' onClick={onClickOpenModal}>
-          댓글 3개 모두 보기
-        </div>
-        {openModal && <DetailModal postId={postId} setOpenModal={setOpenModal} isProf='false' />}
-      </MainPostContent>
-      <MainComment commentlength={content.length} onSubmit={submitHandler}>
-        <CommentInput placeholder='댓글달기...' value={comment} onChange={onChangeHandler} />
-        {comment && (
-          <button commentlength={content.length} type='submit'>
-            게시
-          </button>
-        )}
-      </MainComment>
-      <div className='mainPostLine' />
-    </MainPostLikeWrap>
+    <>
+      {content && (
+        <MainPostLikeWrap>
+          <MainPostIcons like={like.toString()}>
+            <BsHeart className='isLikeNo' onClick={() => onClickUpdateIsLike()} />
+            <BsHeartFill className='isLikeYes' onClick={() => onClickUpdateIsLike()} />
+            {/* styled-components true, false 사용 오류 */}
+            <BsChat className='chatIcon' />
+          </MainPostIcons>
+          <MainPostLikeLength>
+            <p>좋아요 {changeLikeCount}개</p>
+          </MainPostLikeLength>
+          <MainPostContent>
+            {content.length > 25 ? (isShowMore ? content : content.slice(0, 25).padEnd(28, '.')) : content}
+            {!isShowMore && content.length > 25 && (
+              <div className='showMore' ismore={content.length} onClick={showMoreClickHandler}>
+                더 보기
+              </div>
+            )}
+            <div className='commentsLength' onClick={onClickOpenModal}>
+              댓글 {commentCount}개 모두 보기
+            </div>
+            {openModal && <DetailModal postId={postId} setOpenModal={setOpenModal} isProf='false' />}
+          </MainPostContent>
+          <MainComment commentlength={content.length} onSubmit={submitHandler}>
+            <CommentInput placeholder='댓글달기...' value={comment} onChange={onChangeHandler} />
+            {comment && (
+              <button commentlength={content.length} type='submit'>
+                게시
+              </button>
+            )}
+          </MainComment>
+          <div className='mainPostLine' />
+        </MainPostLikeWrap>
+      )}
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import Signin from '../pages/Signin';
 import Main from '../pages/Main';
 import NotAuthRoutes from './NotAuthRoutes';
 import AuthRoutes from './AuthRoutes';
+import Detail from '../pages/Detail';
 
 const Nav = () => {
   const user = Boolean(localStorage.getItem('accessToken'));
