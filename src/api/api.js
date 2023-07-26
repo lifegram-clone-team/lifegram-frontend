@@ -64,6 +64,7 @@ const getPostDetail = async (postId) => {
 
 // 게시물 삭제
 const deletePost = async (postId) => {
+  console.log('deletePost postId=', postId);
   await axios({
     url: `${URL}/post/${postId}`,
     method: 'DELETE',
@@ -138,6 +139,7 @@ const createComment = async (postId, newComment) => {
 
 // 댓글 삭제
 const deleteComment = async (postId, commentId) => {
+  console.log('deleteComment commentId=', commentId);
   await axios({
     url: `${URL}/post/${postId}/comment/${commentId}`,
     method: 'DELETE',

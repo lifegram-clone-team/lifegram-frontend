@@ -10,13 +10,13 @@ import Main from '../pages/Main';
 const Nav = () => {
   return (
     <Routes>
-      <Route path="/" element={<Signin />} />
-      <Route path="/register" element={<Signup />} />
-      <Route path="/" element={<Header />}>
-        <Route path="profile" element={<Profile />} />
-        <Route path="main" element={<Main />} />
+      <Route path='/' element={<Signin />} />
+      <Route path='/register' element={<Signup />} />
+      <Route path='/' element={<Header />}>
+        <Route path='profile' element={<Profile />} />
+        <Route path='main' element={<Main />} />
       </Route>
-      <Route path="/detail" element={<DetailModal />} />
+      <Route path='/:id' element={<DetailModal />} />
     </Routes>
   );
 };
