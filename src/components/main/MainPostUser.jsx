@@ -3,11 +3,15 @@ import { styled } from "styled-components";
 
 const MainPostUser = ({ writer, userImgUrl, createdAt }) => {
   return (
-    <MainPostUserWrap>
-      <img src={userImgUrl} />
-      <div className="name">{writer}</div>
-      <div className="date">{createdAt.slice(2, 10)}</div>
-    </MainPostUserWrap>
+    <>
+      {createdAt && (
+        <MainPostUserWrap>
+          <img src={userImgUrl} />
+          <div className="name">{writer}</div>
+          <div className="date">{createdAt.slice(2, 10)}</div>
+        </MainPostUserWrap>
+      )}
+    </>
   );
 };
 const MainPostUserWrap = styled.div`

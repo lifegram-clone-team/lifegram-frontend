@@ -19,6 +19,7 @@ const MainPost = ({ post }) => {
         likeCount={post.likeCount}
         postId={post.postId}
         content={post.content}
+        commentCount={post.commentCount}
       />
     </MainPostWrap>
   );
