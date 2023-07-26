@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { createComment } from '../../api/api';
 import { useMutation, useQueryClient } from 'react-query';
 import DetailModal from '../detail/DetailModal';
+import { updateIsLike } from '../../api/api';
 
 const MainPostBottom = ({ like, likeCount, postId, content }) => {
   const [isShowMore, setIsShowMore] = useState(false);
@@ -21,6 +22,17 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
     },
   });
 
+  //리액트쿼리 세팅
+  //좋아요 update mutate => 요청시 boolean값 조절
+  const { mutate: updateIsLikeMutation } = useMutation(() => updateIsLike(postId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+    },
+  });
+  const onClickUpdateIsLike = async () => {
+    updateIsLikeMutation();
+  };
+
   const changeLikeCount = likeCount >= 10000 ? `${likeCount / 10000}만` : likeCount;
 
   const showMoreClickHandler = () => {
@@ -28,6 +40,7 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
   };
 
   const onClickOpenModal = () => {
+    window.history.pushState(null, null, `/${postId}`);
     setOpenModal(!openModal);
   };
 
@@ -46,8 +59,8 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
   return (
     <MainPostLikeWrap>
       <MainPostIcons like={like.toString()}>
-        <BsHeart className='isLikeNo' />
-        <BsHeartFill className='isLikeYes' />
+        <BsHeart className='isLikeNo' onClick={() => onClickUpdateIsLike()} />
+        <BsHeartFill className='isLikeYes' onClick={() => onClickUpdateIsLike()} />
         {/* styled-components true, false 사용 오류 */}
         <BsChat className='chatIcon' />
       </MainPostIcons>
@@ -64,7 +77,7 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
         <div className='commentsLength' onClick={onClickOpenModal}>
           댓글 3개 모두 보기
         </div>
-        {openModal && <DetailModal postId={postId} onClickOpenModal={onClickOpenModal} />}
+        {openModal && <DetailModal postId={postId} setOpenModal={setOpenModal} isProf='false' />}
       </MainPostContent>
       <MainComment commentlength={content.length} onSubmit={submitHandler}>
         <CommentInput placeholder='댓글달기...' value={comment} onChange={onChangeHandler} />
