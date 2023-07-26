@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
-import { BsHeart, BsHeartFill, BsChat } from 'react-icons/bs';
-import { styled } from 'styled-components';
-import { createComment } from '../../api/api';
-import { useMutation, useQueryClient } from 'react-query';
-import DetailModal from '../detail/DetailModal';
+import React, { useState } from "react";
+import { BsHeart, BsHeartFill, BsChat } from "react-icons/bs";
+import { styled } from "styled-components";
+import { createComment } from "../../api/api";
+import { useMutation, useQueryClient } from "react-query";
+import DetailModal from "../detail/DetailModal";
 
-const MainPostBottom = ({ like, likeCount, postId, content }) => {
+const MainPostBottom = ({ like, likeCount, postId, content, commentCount }) => {
   const [isShowMore, setIsShowMore] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const queryClient = useQueryClient();
 
   // 댓글생성
-  const { mutate: createCommentMutate } = useMutation(() => createComment(postId, comment), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('comments');
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  const { mutate: createCommentMutate } = useMutation(
+    () => createComment(postId, comment),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("comments");
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
 
-  const changeLikeCount = likeCount >= 10000 ? `${likeCount / 10000}만` : likeCount;
+  const changeLikeCount =
+    likeCount >= 10000 ? `${likeCount / 10000}만` : likeCount;
 
   const showMoreClickHandler = () => {
     setIsShowMore(!isShowMore);
@@ -37,45 +41,66 @@ const MainPostBottom = ({ like, likeCount, postId, content }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (comment.trim() !== '') {
+    if (comment.trim() !== "") {
       createCommentMutate();
-      setComment('');
+      setComment("");
     }
   };
 
   return (
-    <MainPostLikeWrap>
-      <MainPostIcons like={like.toString()}>
-        <BsHeart className='isLikeNo' />
-        <BsHeartFill className='isLikeYes' />
-        {/* styled-components true, false 사용 오류 */}
-        <BsChat className='chatIcon' />
-      </MainPostIcons>
-      <MainPostLikeLength>
-        <p>좋아요 {changeLikeCount}개</p>
-      </MainPostLikeLength>
-      <MainPostContent>
-        {content.length > 25 ? (isShowMore ? content : content.slice(0, 25).padEnd(28, '.')) : content}
-        {!isShowMore && content.length > 25 && (
-          <div className='showMore' ismore={content.length} onClick={showMoreClickHandler}>
-            더 보기
-          </div>
-        )}
-        <div className='commentsLength' onClick={onClickOpenModal}>
-          댓글 3개 모두 보기
-        </div>
-        {openModal && <DetailModal postId={postId} onClickOpenModal={onClickOpenModal} />}
-      </MainPostContent>
-      <MainComment commentlength={content.length} onSubmit={submitHandler}>
-        <CommentInput placeholder='댓글달기...' value={comment} onChange={onChangeHandler} />
-        {comment && (
-          <button commentlength={content.length} type='submit'>
-            게시
-          </button>
-        )}
-      </MainComment>
-      <div className='mainPostLine' />
-    </MainPostLikeWrap>
+    <>
+      {content && (
+        <MainPostLikeWrap>
+          <MainPostIcons like={like.toString()}>
+            <BsHeart className="isLikeNo" />
+            <BsHeartFill className="isLikeYes" />
+            {/* styled-components true, false 사용 오류 */}
+            <BsChat className="chatIcon" />
+          </MainPostIcons>
+          <MainPostLikeLength>
+            <p>좋아요 {changeLikeCount}개</p>
+          </MainPostLikeLength>
+          <MainPostContent>
+            {content.length > 25
+              ? isShowMore
+                ? content
+                : content.slice(0, 25).padEnd(28, ".")
+              : content}
+            {!isShowMore && content.length > 25 && (
+              <div
+                className="showMore"
+                ismore={content.length}
+                onClick={showMoreClickHandler}
+              >
+                더 보기
+              </div>
+            )}
+            <div className="commentsLength" onClick={onClickOpenModal}>
+              댓글 {commentCount}개 모두 보기
+            </div>
+            {openModal && (
+              <DetailModal
+                postId={postId}
+                onClickOpenModal={onClickOpenModal}
+              />
+            )}
+          </MainPostContent>
+          <MainComment commentlength={content.length} onSubmit={submitHandler}>
+            <CommentInput
+              placeholder="댓글달기..."
+              value={comment}
+              onChange={onChangeHandler}
+            />
+            {comment && (
+              <button commentlength={content.length} type="submit">
+                게시
+              </button>
+            )}
+          </MainComment>
+          <div className="mainPostLine" />
+        </MainPostLikeWrap>
+      )}
+    </>
   );
 };
 
@@ -92,15 +117,19 @@ const MainPostIcons = styled.div`
   svg {
     font-weight: bold;
     padding: 10px 10px 8px 10px;
+    transition: all 0.1s linear;
+    &:hover {
+      transform: scale(1.2);
+    }
   }
   .isLikeYes {
     color: red;
     padding: 8px 8px 8px 0;
-    display: ${({ like }) => (like === 'true' ? 'unset' : 'none')};
+    display: ${({ like }) => (like === "true" ? "unset" : "none")};
   }
   .isLikeNo {
     padding: 8px 8px 8px 0;
-    display: ${({ like }) => (like === 'true' ? 'none' : 'unset')};
+    display: ${({ like }) => (like === "true" ? "none" : "unset")};
     &:hover {
       color: #848484;
     }
@@ -127,6 +156,7 @@ const MainPostContent = styled.div`
     color: #848484;
     margin-top: 8px;
     font-size: 0.9rem;
+    cursor: pointer;
   }
 `;
 const MainComment = styled.form`
@@ -137,7 +167,7 @@ const MainComment = styled.form`
     font-weight: bold;
     color: #0095f6;
     margin-left: 10px;
-    display: ${({ commentlength }) => (commentlength >= 1 ? 'unset' : 'none')};
+    display: ${({ commentlength }) => (commentlength >= 1 ? "unset" : "none")};
     &:hover {
       cursor: pointer;
     }

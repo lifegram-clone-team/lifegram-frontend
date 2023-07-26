@@ -1,22 +1,32 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Header from '../components/common/Header';
-import Profile from '../pages/Profile';
-import DetailModal from '../components/detail/DetailModal';
-import Signup from '../pages/Signup';
-import Signin from '../pages/Signin';
-import Main from '../pages/Main';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Header from "../components/common/Header";
+import Profile from "../pages/Profile";
+import Signup from "../pages/Signup";
+import Signin from "../pages/Signin";
+import Main from "../pages/Main";
+import NotAuthRoutes from "./NotAuthRoutes";
+import AuthRoutes from "./AuthRoutes";
 
 const Nav = () => {
+  const user = Boolean(localStorage.getItem("accessToken"));
+
   return (
     <Routes>
-      <Route path='/' element={<Signin />} />
-      <Route path='/register' element={<Signup />} />
-      <Route path='/' element={<Header />}>
-        <Route path='profile' element={<Profile />} />
-        <Route path='main' element={<Main />} />
+      <Route element={<NotAuthRoutes user={user} />}>
+        <Route path="/" element={<Signin />} />
+        <Route path="/register" element={<Signup />} />
+        <Route path="/*" element={<div>404</div>} />
       </Route>
-      <Route path='/:id' element={<DetailModal />} />
+
+      <Route element={<AuthRoutes user={user} />}>
+        <Route element={<Header />}>
+          <Route path="/main" element={<Main />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+      </Route>
+
+      <Route path={"/*"} element={<div>404</div>} />
     </Routes>
   );
 };
