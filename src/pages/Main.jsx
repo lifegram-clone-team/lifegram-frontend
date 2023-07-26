@@ -10,12 +10,11 @@ const Main = () => {
   const { isLoading, error, data } = useQuery("mainPosts", () =>
     getPosts(page)
   );
-  console.log(data);
   return (
     <HeaderMain>
       <MainHeader>
         {isLoading &&
-          Array(3)
+          Array(2)
             .fill()
             .map((_, index) => <PostSkeleton key={index} />)}
         {data &&
