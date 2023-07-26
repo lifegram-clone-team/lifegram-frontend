@@ -1,12 +1,18 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
-const ProfileContainer = ({ writerImgUrl, writer }) => {
+const ProfileContainer = ({ writerImgUrl, writer, content, createdAt, media }) => {
   return (
-    <StProfileContainer>
+    <StProfileContainer media={media}>
       <StProImgContainer>
         <img src={writerImgUrl} alt='writerimg' />
       </StProImgContainer>
-      <div>{writer}</div>
+      <StProBodyContainer>
+        <StWriterContent>
+          <span className='writer'>{writer}</span>
+          <span>{content}</span>
+        </StWriterContent>
+        <div className='time '>{createdAt}</div>
+      </StProBodyContainer>
     </StProfileContainer>
   );
 };
@@ -17,16 +23,22 @@ const StProfileContainer = styled.div`
   display: flex;
   width: 100%;
   gap: 15px;
-  border-bottom: 1px solid black;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
   margin-top: 10px;
   align-items: center;
-  font-size: 16px;
-  font-weight: 700;
+  padding-left: 15px;
+
+  ${(props) =>
+    props.media === 'media' &&
+    css`
+      @media (max-width: 735px) {
+        display: none;
+      }
+    `}
 `;
 
 const StProImgContainer = styled.div`
-  width: 40px;
+  min-width: 40px;
   height: 40px;
 
   border-radius: 50%;
@@ -36,5 +48,19 @@ const StProImgContainer = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+`;
+const StProBodyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const StWriterContent = styled.div`
+  display: flex;
+  gap: 10px;
+  padding-right: 15px;
+
+  .writer {
+    font-size: 16px;
+    font-weight: 700;
   }
 `;

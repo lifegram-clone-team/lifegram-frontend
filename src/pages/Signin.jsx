@@ -1,17 +1,19 @@
-import { styled } from "styled-components";
-import leftImg from "../assets/image/signLeftImg.png";
-import Instagram from "../assets/image/instagram-logo.png";
-import Input from "../components/common/intput/Input";
-import Button from "../components/common/button/Button";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
+import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { loginPost } from '../api/api';
+import { useMutation } from 'react-query';
+import { notification } from 'antd';
+import leftImg from '../assets/image/signLeftImg.png';
+import Instagram from '../assets/image/instagram-logo.png';
+import Input from '../components/common/intput/Input';
+import Button from '../components/common/button/Button';
 
 const Signin = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const { email, password } = formData;
@@ -23,33 +25,38 @@ const Signin = () => {
       [name]: value,
     });
   };
+  const mutation = useMutation(
+    loginPost,
+
+    {
+      onSuccess: (data) => {
+        localStorage.setItem('accessToken', data.accessToken);
+        window.location.href = '/main';
+
+        // navigate('/main');
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    }
+  );
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const regExEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regExPassword = /^[a-zA-Z0-9]{8,16}$/;
-    // 이메일 유효성 검사
     if (!regExEmail.test(email)) {
-      alert("올바른 이메일 형식이 아닙니다.");
+      notification.warning({
+        message: '올바른 이메일 형식이 아닙니다.',
+      });
       return;
     }
-    // 비밀번호 유효성 검사
     if (!regExPassword.test(password)) {
-      alert(
-        "비밀번호는 영문 대소문자, 숫자로 8자 이상 16자 이하로 작성해야 합니다."
-      );
+      notification.error({
+        message: '존재 하지 않은 유조입니다',
+      });
       return;
     }
-    try {
-      await axios
-        .post("https://four-cut.store/api/auth/login", formData)
-        .then((res) => {
-          console.log(res);
-          localStorage.setItem("accessToken", res.data.accessToken);
-        });
-      navigate("/main");
-    } catch (error) {
-      console.error("Error creating user:", error);
-    }
+    mutation.mutate(formData);
   };
   return (
     <LoginWrapper>
@@ -60,7 +67,7 @@ const Signin = () => {
         <img
           src={Instagram}
           alt="rasm"
-          style={{ width: "150px", height: "40px" }}
+          style={{ width: '150px', height: '40px' }}
         />
         <Form onSubmit={onSubmitHandler}>
           <Input
@@ -76,7 +83,7 @@ const Signin = () => {
             name="password"
             placeholder="비밀번호"
             onChange={handleChange}
-          />{" "}
+          />{' '}
           <br />
           <Button type="submit">로그인</Button>
           <BtnBottom>
@@ -86,7 +93,7 @@ const Signin = () => {
           </BtnBottom>
           <p>
             계정이 있으신가요?
-            <span onClick={() => navigate("/register")}>가입하기</span>
+            <span onClick={() => navigate('/register')}>가입하기</span>
           </p>
         </Form>
       </Right>

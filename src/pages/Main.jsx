@@ -1,15 +1,48 @@
-import React, { useState } from "react";
-import { styled } from "styled-components";
-import MainPost from "../components/main/MainPost";
-import PostSkeleton from "../components/main/mainLoding/PostSkeleton";
-import { getPosts } from "../api/api.js";
-import { useQuery } from "react-query";
-
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { styled } from 'styled-components';
+import MainPost from '../components/main/MainPost';
+import PostSkeleton from '../components/main/mainLoding/PostSkeleton';
+import { getPosts } from '../api/api.js';
+import { useInfiniteQuery, useQuery } from 'react-query';
+// main page
 const Main = () => {
-  const [page, setPage] = useState(1);
-  const { isLoading, error, data } = useQuery("mainPosts", () =>
-    getPosts(page)
+  // const [page, setPage] = useState(1);
+
+  // const { isLoading, error, data } = useQuery('mainPosts', () =>
+  //   getPosts(page)
+  // );
+  const observerElem = useRef(null);
+  console.log(observerElem);
+  const { data, isSuccess, fetchNextPage, hasNextPage, isLoading, isError } =
+    useInfiniteQuery('mainPosts', ({ pageParam = 1 }) => getPosts(pageParam), {
+      getNextPageParam: (posts) => {
+        return posts.last ? undefined : posts.pageable.pageNumber + 2;
+      },
+    });
+  data && console.log('data', data.pages[0].content);
+  const handleObserver = useCallback(
+    (entries) => {
+      const [target] = entries;
+      if (target.isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage]
   );
+
+  useEffect(() => {
+    const element = observerElem.current;
+    const option = { threshold: 1 };
+
+    const observer = new IntersectionObserver(handleObserver, option);
+    observer.observe(element);
+    return () => observer.unobserve(element);
+  }, [handleObserver]);
+
+  // 모든 페이지의 데이터를 하나의 배열로 합치기
+  const allPosts = data?.pages.flatMap((page) => page.content) || [];
+  data && console.log(allPosts);
+
   return (
     <HeaderMain>
       <MainHeader>
@@ -18,9 +51,8 @@ const Main = () => {
             .fill()
             .map((_, index) => <PostSkeleton key={index} />)}
         {data &&
-          data.content.map((post) => (
-            <MainPost key={post.postId} post={post} />
-          ))}
+          allPosts.map((post) => <MainPost key={post.postId} post={post} />)}
+        <div ref={observerElem} className="tq"></div>
       </MainHeader>
     </HeaderMain>
   );
@@ -40,9 +72,11 @@ const HeaderMain = styled.div`
 `;
 const MainHeader = styled.div`
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 5px;
   margin-top: 5%;
 `;
 export default Main;
