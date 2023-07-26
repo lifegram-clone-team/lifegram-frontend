@@ -12,13 +12,14 @@ const MainPost = ({ post }) => {
         createdAt={post.createdAt}
       />
       <div className="postImg">
-        <img src={post.postImgUrl} alt="사진" />
+        <img src={post.postImgUrl} alt={post.postId} />
       </div>
       <MainPostBottom
         like={post.like}
         likeCount={post.likeCount}
         postId={post.postId}
         content={post.content}
+        commentCount={post.commentCount}
       />
     </MainPostWrap>
   );
