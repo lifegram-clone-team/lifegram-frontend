@@ -44,6 +44,7 @@ const StCommentContainer = styled.div`
   margin-top: 30px;
   gap: 15px;
   padding-left: 15px;
+  padding-right: 15px;
   @media (max-width: 735px) {
     display: none;
   }
