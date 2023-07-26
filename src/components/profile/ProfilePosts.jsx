@@ -5,7 +5,6 @@ import { getUserPosts } from "../../api/api";
 
 const ProfilePosts = () => {
   const observerElem = useRef(null);
-
   const { data, isSuccess, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery(
       "mainPosts",
@@ -42,12 +41,10 @@ const ProfilePosts = () => {
   data && console.log(allPosts);
   return (
     <ProfilePostsWrap>
-      {isSuccess &&
+      {allPosts &&
         allPosts.map((post) => (
-          <Box key={post.postId} src={post.profileImgUrl} alt="image" />
+          <Box key={post.postId} src={post.profileImgUrl} alt={post.postId}/>
         ))}
-      {/* {isLoading && <div>Loading...</div>}
-      {isError && <div>Error loading data.</div>} */}
       <div ref={observerElem}></div>
     </ProfilePostsWrap>
   );

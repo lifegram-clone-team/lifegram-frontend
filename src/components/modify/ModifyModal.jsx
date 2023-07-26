@@ -9,7 +9,8 @@ import { getUserInfo } from "../../api/api";
 
 
 
-const ModalModify = () => {
+const ModifyModal = () => {
+  const URL = process.env.REACT_APP_API_URI;
   const {id}=useParams()
   const [edited, setEdited] = useState(false);
   const [content, setContent, handleContentsChange] = useInput("");
@@ -20,18 +21,10 @@ const ModalModify = () => {
   const [inputCount, setInputCount] = useState(0);
   const [addUser, setAddUser] = useState(null);
   const token = localStorage.getItem("accessToken");
-  const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
-  // console.log(token)
+  const { data } = useQuery("profileUserImg", getUserInfo);
   const navigate=useNavigate()
- 
-  // console.log(data)
-  // const data={
-  //   addUser:"ParkMinji",
-  //   addUserImg:"https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
-  // }
-  // useEffect(() => {
-  //   getUserInfo();
-  // }, []);
+  const { data: postDetailData } = useQuery("postDetail", () => getPostDetail(id));
+ console.log(postDetailData)
 
  
   const onModifyPost = async (e)=>{
@@ -39,12 +32,14 @@ const ModalModify = () => {
     const contents = {
       content,
     }
-    const response= await axios.put(`https://four-cut.store/api/post/${id}`,contents,{
+    const response= await axios.put(`${URL}/post/${id}`,contents,{
       headers:
       {Authorization: `Bearer ${token}`,}
     })
+    // console.log(response)
+    navigate(-1)
   }
- 
+
 
   
   const clickPrevHandler=()=>{
@@ -74,11 +69,11 @@ const ModalModify = () => {
             <button type="submit">완료</button>
           </div>
         </div>
-          <div className="addPost">
+          <div className="modifyPost">
             <div className="addImg">
-             수정되지 않습니다.
+             <img src={postDetailData.postImgUrl} alt="" />
             </div>
-            <div className="addContents">
+            <div className="modifyContents">
             <div className="user">
             <div className="userProfile">
               <div className="userImg">
@@ -110,7 +105,7 @@ const ModalModify = () => {
 const ModifyPosts = styled.div`
   .modifyPostWrap{max-width:860px;max-height:758px;margin:0 auto;display:flex;flex-direction:column;align-items:center; width: 100%; height: 530px;padding-top:35px;}
 
-  /* addPost 게시물 상단 공유하기 */
+  /* modifyPost 게시물 상단 공유하기 */
   .modifyPostWrap>.postSharesWrap{display: flex; flex-direction: column;width: 100%;height: 100%;
     justify-content: center; align-items: center;background: #ffffff;border: 5px solid #ffffff;
     border-radius: 10px;}
@@ -118,57 +113,57 @@ const ModifyPosts = styled.div`
   .modifyPostWrap>.postSharesWrap>.postShare>button{background:transparent;border:none;cursor:pointer;}
   .modifyPostWrap>.postSharesWrap>.postShare>h4{font-size:22px;}
   .postShare>.finishBtn>button{background:transparent;border:none;font-size:14px;font-weight:600;color:rgb(0,149,246);cursor:pointer;}
-   /* addPost 게시물 이미지, 글씨 감싸기 */
-  .modifyPostWrap>.postSharesWrap>.addPost{display:flex;width:100%;height:90%;}
-    /* addPost 게시물 이미지 시작 */
-.addPost>.addImg{max-width:860px;max-height:860px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content: center;width:520px;height:100%;border-right:1px solid #dedede;margin-right:10px;}
+   /* modifyPost 게시물 이미지, 글씨 감싸기 */
+  .modifyPostWrap>.postSharesWrap>.modifyPost{display:flex;width:100%;height:90%;}
+    /* modifyPost 게시물 이미지 시작 */
+.modifyPost>.addImg{max-width:860px;max-height:860px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content: center;width:520px;height:100%;border-right:1px solid #dedede;margin-right:10px;}
 .addImg>.imageUploadSize{width:100%;height:100%;}
 .addImg>.imageUploadSize>img{width:100%;height:100%;object-fit:cover;object-position: center;}
-  .modifyPostWrap>.postSharesWrap>.addPost>.addImg>.images{display: flex; flex-direction: column;
+  .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.images{display: flex; flex-direction: column;
     align-items: center; justify-content: center; width: 100%;height: 80%;}
-    .modifyPostWrap>.postSharesWrap>.addPost>.addImg>.images>.imgUploadIcons{ width: 100%;  height: 40%;display:flex;justify-content: center; align-items: center;}
-    .modifyPostWrap>.postSharesWrap>.addPost>.addImg>.images>.imageText{width:100%;height:10%;display:flex;justify-content:center;align-items:center;font-size:18px;}
-    /* addPost 게시물 이미지 업로드 버튼 */
-  .modifyPostWrap>.postSharesWrap>.addPost>.addImg>.button>.inputFileBtn {padding: 5px 7px;
+    .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.images>.imgUploadIcons{ width: 100%;  height: 40%;display:flex;justify-content: center; align-items: center;}
+    .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.images>.imageText{width:100%;height:10%;display:flex;justify-content:center;align-items:center;font-size:18px;}
+    /* modifyPost 게시물 이미지 업로드 버튼 */
+  .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.button>.inputFileBtn {padding: 5px 7px;
   background-color:rgb(0,149,246);border-radius: 4px;color: white;cursor: pointer;font-size:15px;}
-  .modifyPostWrap>.postSharesWrap>.addPost>.addImg>.button>input{display:none;}
+  .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.button>input{display:none;}
 
 
-   /* addPost 게시물 글씨 시작 */
-   .modifyPostWrap>.postSharesWrap>.addPost>.addContents{display:flex;flex:1;flex-direction:column;width:24%;height:100%;}
-   .addPost>.addContents>.user{width:100%;height:10%;display:flex;margin-top:5px;}
-   .addPost>.addContents>.user>.userProfile{width: 100%; height: 100%; display: flex;
+   /* modifyPost 게시물 글씨 시작 */
+   .modifyPostWrap>.postSharesWrap>.modifyPost>.modifyContents{display:flex;flex:1;flex-direction:column;width:24%;height:100%;}
+   .modifyPost>.modifyContents>.user{width:100%;height:10%;display:flex;margin-top:5px;}
+   .modifyPost>.modifyContents>.user>.userProfile{width: 100%; height: 100%; display: flex;
     align-items: center; font-size:18px;}
-   .addPost>.addContents>.user>.userProfile>.userImg{width:12%;height:100%;}
-   .addPost>.addContents>.user>.userProfile>.userImg>img{width:100%;height:100%;border-radius: 50%;}
-   .addPost>.addContents>.user>.userProfile>p{margin-left:10px;}
-   .addPost>.addContents>.user>.userName{position:sticky;}
-   .addPost>.addContents>.contents{width:100%;height:75%;  position: relative;padding-top:20px;}
-   .addPost>.addContents>.contents>textarea{width:100%;min-height:300px;border:none;resize:none; overflow-y: auto;overflow-x:hidden;outline:none;}
-   .addPost>.addContents>.contents>p{position:absolute; width: 100%; display: flex; justify-content: flex-end;font-size:16px;}
+   .modifyPost>.modifyContents>.user>.userProfile>.userImg{width:12%;height:100%;}
+   .modifyPost>.modifyContents>.user>.userProfile>.userImg>img{width:100%;height:100%;border-radius: 50%;}
+   .modifyPost>.modifyContents>.user>.userProfile>p{margin-left:10px;}
+   .modifyPost>.modifyContents>.user>.userName{position:sticky;}
+   .modifyPost>.modifyContents>.contents{width:100%;height:75%;  position: relative;padding-top:20px;}
+   .modifyPost>.modifyContents>.contents>textarea{width:100%;min-height:300px;border:none;resize:none; overflow-y: auto;overflow-x:hidden;outline:none;}
+   .modifyPost>.modifyContents>.contents>p{position:absolute; width: 100%; display: flex; justify-content: flex-end;font-size:16px;}
    @media screen and (min-width:750px) and (max-width:1250px) {
     .modifyPostWrap{width:750px;height:550px;}
     .addImg>.imageUploadSize{width:400px;height:400px;}
    }
    @media screen and (min-width:501px)and (max-width:750px){
     .modifyPostWrap{width:650px;}
-    .addPost>.addImg{width:350px;height:100%;}
+    .modifyPost>.addImg{width:350px;height:100%;}
     .addImg>.imageUploadSize{width:100%;height:100%;}
-    .modifyPostWrap>.postSharesWrap>.addPost>.addContents{width:300px;}
+    .modifyPostWrap>.postSharesWrap>.modifyPost>.modifyContents{width:300px;}
    }
    @media screen and (max-width:500px){
     .modifyPostWrap { max-width: 860px; max-height: 758px; margin: 0 auto; display: flex; flex-direction: column;
     align-items: center; width: 100%; height:100%; overflow-x: hidden;}
-   .modifyPostWrap>.postSharesWrap>.addPost{height:90%;flex-direction:column;overflow-x:hidden;}
-   .addPost>.addImg{height:50%;}
+   .modifyPostWrap>.postSharesWrap>.modifyPost{height:90%;flex-direction:column;overflow-x:hidden;}
+   .modifyPost>.addImg{height:50%;}
    .addImg>.imageUploadSize{width:100%;height:100%;}
    .hrXGvK .addImg>.imageUploadSize>img{width:100%;}
-   .modifyPostWrap>.postSharesWrap>.addPost>.addContents{width:100%;height: 50%;margin-top: 10px;}
-   .addPost>.addContents>.user{height: 25%; margin-top: 0;
+   .modifyPostWrap>.postSharesWrap>.modifyPost>.modifyContents{width:100%;height: 50%;margin-top: 10px;}
+   .modifyPost>.modifyContents>.user{height: 25%; margin-top: 0;
     align-items: center; justify-content: center;}
-   .addPost>.addContents>.contents{position:initial;}
-   .addPost>.addContents>.contents>p{height:10%;position:unset}
+   .modifyPost>.modifyContents>.contents{position:initial;}
+   .modifyPost>.modifyContents>.contents>p{height:10%;position:unset}
   }
   `
 
-export default ModalModify;
+export default ModifyModal;

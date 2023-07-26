@@ -16,6 +16,10 @@ const Header = () => {
     localStorage.removeItem('accessToken');
     window.location.replace('/');
   };
+  const reloadClickHandler = () => {
+    window.location.href = '/profile';
+    console.log('hi');
+  }
   return (
     <PageContainer>
       <HeaderContainer>
@@ -34,7 +38,7 @@ const Header = () => {
             <p className="smallWidth">만들기</p>
           </SNavLink>
           <SNavLink to="/profile">
-            {data && <img src={data.profileImgUrl} alt="유저프로필" />}
+            {data && <img src={data.profileImgUrl} alt="유저프로필"/>}
             <p className="smallWidth">프로필</p>
           </SNavLink>
         </HeaderList>

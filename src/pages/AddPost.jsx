@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const AddPost = () => {
   const [showModalAdd, setShowModalAdd] = useState(true);
   const[isOpen,setIsOpen]=useState(false)
-  const navigate=useNavigate()
+  const navigate= useNavigate()
 
   const onCloseHandler=()=>{
    setShowModalAdd(false);
