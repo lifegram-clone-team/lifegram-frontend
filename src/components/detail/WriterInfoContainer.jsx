@@ -1,6 +1,6 @@
 import { css, styled } from 'styled-components';
 
-const ProfileContainer = ({ writerImgUrl, writer, content, createdAt, media }) => {
+const WriterInfoContainer = ({ writerImgUrl, writer, content, createdAt, media }) => {
   return (
     <StProfileContainer media={media}>
       <StProImgContainer>
@@ -17,7 +17,7 @@ const ProfileContainer = ({ writerImgUrl, writer, content, createdAt, media }) =
   );
 };
 
-export default ProfileContainer;
+export default WriterInfoContainer;
 
 const StProfileContainer = styled.div`
   display: flex;

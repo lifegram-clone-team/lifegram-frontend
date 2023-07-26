@@ -1,18 +1,22 @@
-import { styled } from 'styled-components';
+import { styled, css } from 'styled-components';
 import CommentContainer from './CommentContainer';
-import ProfileContainer from './ProfileContainer';
+import WriterInfoContainer from './WriterInfoContainer';
 import { deletePost, getPostDetail } from '../../api/api';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import DetailFooter from './DetailFooter';
-
+import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import ReactDom from 'react-dom';
 
-const DetailModal = ({ postId, onClickOpenModal }) => {
+const DetailModal = ({ postId, isProf, setOpenModal }) => {
   // const token = localStorage.getItem('accessToken');
 
   //로직 시작
+  const onClickOpenModal = () => {
+    setOpenModal(false);
+    window.history.pushState(null, null, `/main`);
+  };
 
   const queryClient = useQueryClient();
 
@@ -43,25 +47,29 @@ const DetailModal = ({ postId, onClickOpenModal }) => {
           <img src={data.postImgUrl} alt='img' />
         </StImgContainer>
         <StPost>
-          <StModify>
+          <StModify isProf={isProf}>
+            <Link to={`/modify/${postId}`}>
             <div className='modify'>수정</div>
+            </Link>
             <div className='delete' onClick={() => onClickDeletePost(postId)}>
               삭제
             </div>
           </StModify>
-          <ProfileContainer writerImgUrl={data.writerImgUrl} writer={data.writer} />
+          <WriterInfoContainer writerImgUrl={data.writerImgUrl} writer={data.writer} />
           <hr />
-          <ProfileContainer
+          <WriterInfoContainer
             writerImgUrl={data.writerImgUrl}
             writer={data.writer}
             content={data.content}
             createdAt={data.createdAt}
             media='media'
           />
-          {data &&
-            data.comments?.map((comment) => {
-              return <CommentContainer key={comment.commentId} comment={comment} postId={postId} />;
-            })}
+          <StCommentBox>
+            {data &&
+              data.comments?.map((comment) => {
+                return <CommentContainer key={comment.commentId} comment={comment} postId={postId} />;
+              })}
+          </StCommentBox>
           <DetailFooter
             like={data.like}
             likeCount={data.likeCount}
@@ -122,8 +130,8 @@ const StImgContainer = styled.div`
   background-color: black;
 
   img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
   }
 
@@ -163,6 +171,15 @@ const StPost = styled.div`
     }
   }
 `;
+const StCommentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  width: 100%;
+  height: 70%;
+  overflow: auto;
+  margin-bottom: 150px;
+`;
 
 const StModify = styled.div`
   display: flex;
@@ -171,6 +188,12 @@ const StModify = styled.div`
   right: 10px;
   top: 20px;
   color: grey;
+/* 
+  ${(props) =>
+    props.isProf === 'false' &&
+    css`
+      display: none;
+    `} */
 
   .modify {
     cursor: pointer;

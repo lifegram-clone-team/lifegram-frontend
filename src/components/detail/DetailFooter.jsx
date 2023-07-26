@@ -43,7 +43,7 @@ const DetailFooter = ({ like, likeCount, commentCreatedAt, id }) => {
     <StFooter>
       <StIconContainer>
         {like ? (
-          <BsHeartFill onClick={() => onClickUpdateIsLike()} size='26' />
+          <BsHeartFill onClick={() => onClickUpdateIsLike()} size='26' color='red' />
         ) : (
           <BsHeart onClick={() => onClickUpdateIsLike()} size='26' />
         )}
