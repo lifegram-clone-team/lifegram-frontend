@@ -1,13 +1,15 @@
-import { useState } from 'react';
-import { BsHeart, BsHeartFill, BsChat } from 'react-icons/bs';
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
-import { styled } from 'styled-components';
-import { createComment, updateIsLike } from '../../api/api';
+import { useState } from "react";
+import { BsHeart, BsHeartFill, BsChat } from "react-icons/bs";
+import { useMutation } from "react-query";
+import { useQueryClient } from "react-query";
+import { styled } from "styled-components";
+import { createComment, updateIsLike } from "../../api/api";
 
 const DetailFooter = ({ like, likeCount, commentCreatedAt, id }) => {
+  console.log("detailFooter", like, likeCount, commentCreatedAt, id);
+
   //useState, onchange input
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const onChangeComment = (e) => {
     setComment(e.target.value);
   };
@@ -18,42 +20,53 @@ const DetailFooter = ({ like, likeCount, commentCreatedAt, id }) => {
   //좋아요 update mutate => 요청시 boolean값 조절
   const { mutate: updateIsLikeMutation } = useMutation(() => updateIsLike(id), {
     onSuccess: () => {
-      queryClient.invalidateQueries('posts');
+      queryClient.invalidateQueries("posts");
     },
   });
   const onClickUpdateIsLike = async () => {
     updateIsLikeMutation();
   };
   //댓글 생성 mutate
-  const { mutate: createCommentMutate } = useMutation(() => createComment(id, comment), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('comments');
-    },
-  });
+  const { mutate: createCommentMutate } = useMutation(
+    () => createComment(id, comment),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("comments");
+      },
+    }
+  );
 
   const onClickPostComment = () => {
     if (comment.length === 0) {
-      alert('댓글을 입력하세요');
+      alert("댓글을 입력하세요");
     }
     createCommentMutate();
-    setComment('');
+    setComment("");
   };
 
   return (
     <StFooter>
       <StIconContainer>
         {like ? (
-          <BsHeartFill onClick={() => onClickUpdateIsLike()} size='26' color='red' />
+          <BsHeartFill
+            onClick={() => onClickUpdateIsLike()}
+            size="26"
+            color="red"
+          />
         ) : (
-          <BsHeart onClick={() => onClickUpdateIsLike()} size='26' />
+          <BsHeart onClick={() => onClickUpdateIsLike()} size="26" />
         )}
-        <BsChat size='26' />
+        <BsChat size="26" />
       </StIconContainer>
-      <div className='like'>{`좋아요 ${formatLikeCount}개`}</div>
-      <div className='time main'>{commentCreatedAt}</div>
-      <input value={comment} onChange={onChangeComment} placeholder='댓글 달기...' />
+      <div className="like">{`좋아요 ${formatLikeCount}개`}</div>
+      <div className="time main">{commentCreatedAt}</div>
+      <input
+        value={comment}
+        onChange={onChangeComment}
+        placeholder="댓글 달기..."
+      />
       <StPosition>
-        <div onClick={onClickPostComment} className='upload'>
+        <div onClick={onClickPostComment} className="upload">
           게시
         </div>
       </StPosition>

@@ -1,19 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { styled } from "styled-components";
-import MainPost from "../components/main/MainPost";
-import PostSkeleton from "../components/main/mainLoding/PostSkeleton";
-import { getPosts } from "../api/api.js";
-import { useInfiniteQuery, useQuery } from "react-query";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { styled } from 'styled-components';
+import MainPost from '../components/main/MainPost';
+import PostSkeleton from '../components/main/mainLoding/PostSkeleton';
+import { getPosts } from '../api/api.js';
+import { useInfiniteQuery, useQuery } from 'react-query';
 
 const Main = () => {
   const observerElem = useRef(null);
-  const { data, isSuccess, fetchNextPage, hasNextPage, isLoading, isError } =
-    useInfiniteQuery("mainPosts", ({ pageParam = 1 }) => getPosts(pageParam), {
+  const { data, isSuccess, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(
+    'mainPosts',
+    ({ pageParam = 1 }) => getPosts(pageParam),
+    {
       getNextPageParam: (posts) => {
         return posts.last ? undefined : posts.pageable.pageNumber + 2;
       },
-    });
-  
+    }
+  );
   const handleObserver = useCallback(
     (entries) => {
       const [target] = entries;
@@ -44,8 +46,7 @@ const Main = () => {
           Array(3)
             .fill()
             .map((_, index) => <PostSkeleton key={index} />)}
-        {data &&
-          allPosts.map((post) => <MainPost key={post.postId} post={post}/>)}
+        {data && allPosts.map((post) => <MainPost key={post.postId} post={post} />)}
         <div ref={observerElem}></div>
       </MainHeader>
     </HeaderMain>

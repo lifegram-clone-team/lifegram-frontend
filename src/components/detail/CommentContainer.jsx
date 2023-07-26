@@ -1,34 +1,40 @@
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
-import { styled } from 'styled-components';
-import { deleteComment } from '../../api/api';
+import { useMutation } from "react-query";
+import { useQueryClient } from "react-query";
+import { styled } from "styled-components";
+import { deleteComment } from "../../api/api";
 
 const CommentContainer = ({ comment, postId }) => {
-  console.log(comment);
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(() => deleteComment(postId, comment.commentId), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('comments');
-    },
-  });
+  const { mutate } = useMutation(
+    () => deleteComment(postId, comment.commentId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("comments");
+      },
+    }
+  );
 
   const onClickDeleteComment = () => {
     mutate();
   };
+
   return (
     <StCommentContainer>
       <StProImgContainer>
-        <img src={comment.writerImgUrl} alt='writerimg' />
+        <img src={comment.writerImgUrl} alt="writerimg" />
       </StProImgContainer>
       <StCommentBody>
         <StProfile>
-          <span className='writer'>{comment.writer}</span>
+          <span className="writer">{comment.writer}</span>
           <div>{comment.content}</div>
         </StProfile>
         <StTimeDelete>
-          <div className='time'>{comment.createdAt}</div>
-          <span className='delete' onClick={() => onClickDeleteComment(postId, comment.commentId)}>
+          <div className="time">{comment.createdAt}</div>
+          <span
+            className="delete"
+            onClick={() => onClickDeleteComment(postId, comment.commentId)}
+          >
             삭제
           </span>
         </StTimeDelete>
