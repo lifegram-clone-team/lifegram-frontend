@@ -5,6 +5,8 @@ import Profile from '../pages/Profile';
 import Signup from '../pages/Signup';
 import Signin from '../pages/Signin';
 import Main from '../pages/Main';
+import AddPost from '../pages/AddPost';
+import ModifyModal from '../components/modify/ModifyModal'
 import NotAuthRoutes from './NotAuthRoutes';
 import AuthRoutes from './AuthRoutes';
 import Detail from '../pages/Detail';
@@ -19,6 +21,7 @@ const Nav = () => {
         <Route path='/register' element={<Signup />} />
         <Route path='/*' element={<div>404</div>} />
       </Route>
+     
 
       <Route element={<AuthRoutes user={user} />}>
         <Route element={<Header />}>
@@ -26,6 +29,8 @@ const Nav = () => {
           <Route path='profile' element={<Profile />} />
           <Route path='/post/:id' element={<Detail />} />
         </Route>
+        <Route path='/add' element={<AddPost />} />
+      <Route path='/modify/:id' element={<ModifyModal />} />
       </Route>
 
       <Route path={'/*'} element={<div>404</div>} />

@@ -5,7 +5,7 @@ import { deletePost, getPostDetail } from '../../api/api';
 import { useMutation } from 'react-query';
 import { useQueryClient } from 'react-query';
 import DetailFooter from './DetailFooter';
-
+import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import ReactDom from 'react-dom';
 
@@ -48,7 +48,9 @@ const DetailModal = ({ postId, isProf, setOpenModal }) => {
         </StImgContainer>
         <StPost>
           <StModify isProf={isProf}>
+            <Link to={`/modify/${postId}`}>
             <div className='modify'>수정</div>
+            </Link>
             <div className='delete' onClick={() => onClickDeletePost(postId)}>
               삭제
             </div>
@@ -186,12 +188,12 @@ const StModify = styled.div`
   right: 10px;
   top: 20px;
   color: grey;
-
+/* 
   ${(props) =>
     props.isProf === 'false' &&
     css`
       display: none;
-    `}
+    `} */
 
   .modify {
     cursor: pointer;
