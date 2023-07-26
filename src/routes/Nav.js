@@ -1,11 +1,11 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import Header from "../components/common/Header";
-import Profile from "../pages/Profile";
-import DetailModal from "../components/detail/DetailModal";
-import Signup from "../pages/Signup";
-import Signin from "../pages/Signin";
-import Main from "../pages/Main";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Header from '../components/common/Header';
+import Profile from '../pages/Profile';
+import DetailModal from '../components/detail/DetailModal';
+import Signup from '../pages/Signup';
+import Signin from '../pages/Signin';
+import Main from '../pages/Main';
 
 const Nav = () => {
   return (
