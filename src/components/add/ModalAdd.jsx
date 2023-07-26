@@ -26,7 +26,6 @@ import imageCompression from 'browser-image-compression';
    
     const token = localStorage.getItem("accessToken");
     const navigate=useNavigate()
-    // const queryClient = useQueryClient();
     const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
     console.log(data)
     
@@ -36,7 +35,7 @@ import imageCompression from 'browser-image-compression';
    
     try {
       const options = {
-        maxSizeMB:2,
+        maxSizeMB: 2,
         maxWidthOrHeight: 1000,
         useWebWorker: true,
       };

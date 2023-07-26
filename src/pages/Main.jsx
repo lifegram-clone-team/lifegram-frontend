@@ -19,7 +19,6 @@ const Main = () => {
         return posts.last ? undefined : posts.pageable.pageNumber + 2;
       },
     });
-  data && console.log("data", data.pages[0].content);
   const handleObserver = useCallback(
     (entries) => {
       const [target] = entries;

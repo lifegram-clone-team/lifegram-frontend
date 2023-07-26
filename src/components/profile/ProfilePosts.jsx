@@ -1,22 +1,28 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import { styled } from "styled-components";
 import { getUserPosts } from "../../api/api";
+import { Link } from "react-router-dom";
+import ProfileBox from "./ProfileBox";
 
 const ProfilePosts = () => {
   const observerElem = useRef(null);
-
-  const { data, isSuccess, fetchNextPage, hasNextPage, isLoading, isError } =
-    useInfiniteQuery(
-      "mainPosts",
-      ({ pageParam = 1 }) => getUserPosts(pageParam),
-      {
-        getNextPageParam: (posts) => {
-          return posts.last ? undefined : posts.pageable.pageNumber + 2;
-        },
-      }
-    );
-
+  const {
+    data,
+    isSuccess,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isError,
+  } = useInfiniteQuery(
+    "mainPosts",
+    ({ pageParam = 1 }) => getUserPosts(pageParam),
+    {
+      getNextPageParam: (posts) => {
+        return posts.last ? false : posts.pageable.pageNumber + 2;
+      },
+    }
+  );
   const handleObserver = useCallback(
     (entries) => {
       const [target] = entries;
@@ -39,15 +45,17 @@ const ProfilePosts = () => {
 
   // 모든 페이지의 데이터를 하나의 배열로 합치기
   const allPosts = data?.pages.flatMap((page) => page.content) || [];
-  data && console.log(allPosts);
+  data && console.log("allpost", allPosts);
+
   return (
     <ProfilePostsWrap>
       {isSuccess &&
         allPosts.map((post) => (
-          <Box key={post.postId} src={post.profileImgUrl} alt="image" />
+          <ProfileBox
+            key={post.postId}
+            post={post}      
+          />
         ))}
-      {/* {isLoading && <div>Loading...</div>}
-      {isError && <div>Error loading data.</div>} */}
       <div ref={observerElem}></div>
     </ProfilePostsWrap>
   );
@@ -57,20 +65,6 @@ const ProfilePostsWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-`;
-
-const Box = styled.img`
-  width: calc((100% / 3) - 10px);
-  aspect-ratio: 1/1;
-  background-color: #f0f0f0;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  object-fit: cover;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 `;
 
 export default ProfilePosts;
