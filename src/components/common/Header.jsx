@@ -1,23 +1,27 @@
-import React from "react";
-import { GoHome, GoHomeFill } from "react-icons/go";
-import { AiOutlinePlusSquare } from "react-icons/ai";
-import { BiLogOut } from "react-icons/bi";
-import { BsInstagram } from "react-icons/bs";
-import InstaGram from "../../assets/instagram.svg";
-import { styled } from "styled-components";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
-import { getUserInfo } from "../../api/api.js";
+import React from 'react';
+import { GoHome, GoHomeFill } from 'react-icons/go';
+import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { BiLogOut } from 'react-icons/bi';
+import { BsInstagram } from 'react-icons/bs';
+import InstaGram from '../../assets/instagram.svg';
+import { styled } from 'styled-components';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getUserInfo } from '../../api/api.js';
 
 const Header = () => {
-  const { isLoading, error, data } = useQuery("headerUserImg", getUserInfo);
+  const { isLoading, error, data } = useQuery('headerUserImg', getUserInfo);
   const navigate = useNavigate();
+  const onClickHandleLogout = () => {
+    localStorage.removeItem('accessToken');
+    window.location.replace('/');
+  };
   return (
     <PageContainer>
       <HeaderContainer>
         <HeaderLogo>
           <img src={InstaGram} className="smallWidth" />
-          <BsInstagram className="bigWidth" onClick={() => navigate("/main")} />
+          <BsInstagram className="bigWidth" onClick={() => navigate('/main')} />
         </HeaderLogo>
         <HeaderList>
           <SNavLink to="/main">
@@ -34,7 +38,7 @@ const Header = () => {
             <p className="smallWidth">프로필</p>
           </SNavLink>
         </HeaderList>
-        <HeaderLogout>
+        <HeaderLogout onClick={onClickHandleLogout}>
           <BiLogOut />
           <p className="smallWidth">로그아웃</p>
         </HeaderLogout>
