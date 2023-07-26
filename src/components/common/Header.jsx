@@ -25,7 +25,7 @@ const Header = () => {
             <GoHomeFill className="activeIcon" />
             <p className="smallWidth">홈</p>
           </SNavLink>
-          <SNavLink to="/make">
+          <SNavLink to="/add">
             <AiOutlinePlusSquare />
             <p className="smallWidth">만들기</p>
           </SNavLink>
