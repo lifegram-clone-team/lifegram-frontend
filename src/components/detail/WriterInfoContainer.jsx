@@ -1,32 +1,19 @@
-import { css, styled } from "styled-components";
+import { css, styled } from 'styled-components';
 
-const WriterInfoContainer = ({
-  writerImgUrl,
-  writer,
-  content,
-  createdAt,
-  media,
-}) => {
-  content &&
-    console.log(
-      "WriterInfoContainer",
-      writerImgUrl,
-      writer,
-      content,
-      createdAt,
-      media
-    );
+const WriterInfoContainer = ({ writerImgUrl, writer, content, createdAt, media }) => {
+  content && console.log('WriterInfoContainer', writerImgUrl, writer, content, createdAt, media);
+
   return (
     <StProfileContainer media={media}>
       <StProImgContainer>
-        <img src={writerImgUrl} alt="writerimg" />
+        <img src={writerImgUrl} alt='writerimg' />
       </StProImgContainer>
       <StProBodyContainer>
         <StWriterContent>
-          <span className="writer">{writer}</span>
+          <span className='writer'>{writer}</span>
           <span>{content}</span>
         </StWriterContent>
-        <div className="time ">{createdAt}</div>
+        <div className='time'>{createdAt}</div>
       </StProBodyContainer>
     </StProfileContainer>
   );
@@ -44,7 +31,7 @@ const StProfileContainer = styled.div`
   padding-left: 15px;
 
   ${(props) =>
-    props.media === "media" &&
+    props.media === 'media' &&
     css`
       @media (max-width: 735px) {
         display: none;
@@ -68,6 +55,11 @@ const StProImgContainer = styled.div`
 const StProBodyContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  .time {
+    font-size: 13px;
+    color: grey;
+  }
 `;
 const StWriterContent = styled.div`
   display: flex;

@@ -7,7 +7,7 @@ import { useInfiniteQuery, useQuery } from 'react-query';
 
 const Main = () => {
   const observerElem = useRef(null);
-  const { data, isSuccess, fetchNextPage, hasNextPage, isLoading, isError } = useInfiniteQuery(
+  const { data, isSuccess, fetchNextPage, hasNextPage, isFetching, isError } = useInfiniteQuery(
     'mainPosts',
     ({ pageParam = 1 }) => getPosts(pageParam),
     {
@@ -16,6 +16,7 @@ const Main = () => {
       },
     }
   );
+
   const handleObserver = useCallback(
     (entries) => {
       const [target] = entries;
@@ -42,7 +43,7 @@ const Main = () => {
   return (
     <HeaderMain>
       <MainHeader>
-        {isLoading &&
+        {isFetching &&
           Array(3)
             .fill()
             .map((_, index) => <PostSkeleton key={index} />)}

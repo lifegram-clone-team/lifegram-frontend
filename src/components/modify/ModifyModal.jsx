@@ -32,6 +32,7 @@ const ModalModify = () => {
   // }, []);
 
   const onModifyPost = async (e) => {
+    const URL = process.env.REACT_APP_API_URI;
     e.preventDefault();
     const contents = {
       content,
