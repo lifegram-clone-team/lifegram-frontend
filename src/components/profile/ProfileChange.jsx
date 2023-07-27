@@ -7,13 +7,16 @@ import useInput from "../../hooks/useInput";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ProfileChange = ({ setOpenModal }) => {
-  const [setFileImg] = useState("");
+const ProfileChange = () => {
+  const [fileImg, setFileImg] = useState("");
   const [addImg, setAddImg] = useInput("");
   const [image, setImage] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const token = localStorage.getItem("accessToken");
-  const navigate = useNavigate();
+  const navigate=useNavigate() 
+
+
 
   const upLoadImgHandler = async (e) => {
     const file = e.target.files[0];
@@ -33,7 +36,7 @@ const ProfileChange = ({ setOpenModal }) => {
         const imageDataUrl = reader.result;
         setAddImg(imageDataUrl);
         setFileImg(compressedFile);
-        setImage(compressedFile);
+        setImage(compressedFile); 
       };
     } catch (error) {
       console.log(error);
@@ -112,12 +115,15 @@ const ProfileChange = ({ setOpenModal }) => {
   );
 };
 const ProfileChangeModalAll = styled.div`
+  .topX{width:5%;height:5%;}
   .full {
     width: 100%;
     height: 100vh;
     inset: 0px;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.6);
+    position: relative;
+    display:flex;
+    flex-direction:column;
+    /* background-color: rgba(0, 0, 0, 0.6); */
   }
 `;
 const ProfileChangeModal = styled.div`
@@ -143,6 +149,12 @@ const ProfileChangeModal = styled.div`
   }
   .centerImg {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height:90%
   }
   .bottomBtn {
     display: flex;
@@ -164,5 +176,15 @@ const ProfileChangeModal = styled.div`
       }
     }
   }
+  .centerImg>.images{width:100%;display:flex;flex-direction:column;align-items:center;}
+  .images>.imageUploadIcons>svg{width:60;height:60;}
+  .centerImg>.imageUploadSize{width:100%;height:100%;object-fit:cover;}
+  .centerImg>.imageUploadSize>img{width:100%;height:100%;}
+  .centerImg>.images>.imageText{margin-top:10px;}
+  .centerImg>.button{margin-top:20px;}
+  .centerImg>.button>.inputFileBtn {padding: 5px 7px;
+  background-color:rgb(0,149,246);border-radius: 4px;color: white;cursor: pointer;font-size:15px;}
+  .centerImg>.button>input{display:none;}
+  .full>.bottomBtn{margin-top:20px;}
 `;
 export default ProfileChange;

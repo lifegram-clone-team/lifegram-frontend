@@ -171,118 +171,78 @@ const ModalAdd = () => {
   );
 };
 const AddPost = styled.div`
-  .addPostWrap {
-    max-width: 860px;
-    max-height: 758px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 530px;
-    padding-top: 35px;
-  }
+  width:100%;
+  height:100%;
+  .addPostWrap{max-width:860px;max-height:758px;margin:0 auto;display:flex;flex-direction:column;align-items:center; width: 100%; height: 530px;padding-top:35px;}
 
   /* addPost 게시물 상단 공유하기 */
-  .addPostWrap > .postSharesWrap {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    background: #ffffff;
-    border: 5px solid #ffffff;
-    border-radius: 10px;
-  }
-  .addPostWrap > .postSharesWrap > .postShare {
-    display: flex;
-    border-bottom: 1px solid #dedede;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 10%;
-  }
-  .addPostWrap > .postSharesWrap > .postShare > button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  .addPostWrap > .postSharesWrap > .postShare > h4 {
-    font-size: 22px;
-  }
-  .postShare > .shareBtn > button {
-    background: transparent;
-    border: none;
-    font-size: 14px;
-    font-weight: 600;
-    color: rgb(0, 149, 246);
-    cursor: pointer;
-  }
-  /* addPost 게시물 이미지, 글씨 감싸기 */
-  .addPostWrap > .postSharesWrap > .addPost {
-    display: flex;
-    width: 100%;
-    height: 90%;
-  }
-  /* addPost 게시물 이미지 시작 */
-  .addPost > .addImg {
-    max-width: 860px;
-    max-height: 860px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 520px;
-    height: 100%;
-    border-right: 1px solid #dedede;
-    margin-right: 10px;
-  }
-  .addImg > .imageUploadSize {
-    width: 100%;
-    height: 100%;
-  }
-  .addImg > .imageUploadSize > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-  .addPostWrap > .postSharesWrap > .addPost > .addImg > .images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 80%;
-  }
-  .addPostWrap > .postSharesWrap > .addPost > .addImg > .images > .imgUploadIcons {
-    width: 100%;
-    height: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .addPostWrap > .postSharesWrap > .addPost > .addImg > .images > .imageText {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-  }
-  /* addPost 게시물 이미지 업로드 버튼 */
-  .addPostWrap > .postSharesWrap > .addPost > .addImg > .button > .inputFileBtn {
-    padding: 5px 7px;
-    background-color: rgb(0, 149, 246);
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-    font-size: 15px;
-  }
-  .addPostWrap > .postSharesWrap > .addPost > .addImg > .button > input {
-    display: none;
+  .addPostWrap>.postSharesWrap{display: flex; flex-direction: column;width: 100%;height: 100%;
+    justify-content: center; align-items: center;background: #ffffff;border: 5px solid #ffffff;
+    border-radius: 10px;}
+  .addPostWrap>.postSharesWrap>.postShare{display:flex;border-bottom:1px solid #dedede;justify-content: space-between;align-items:center;width:100%;height:10%;}
+  .addPostWrap>.postSharesWrap>.postShare>button{background:transparent;border:none;cursor:pointer;}
+  .addPostWrap>.postSharesWrap>.postShare>h4{font-size:22px;}
+  .postShare>.shareBtn>button{background:transparent;border:none;font-size:14px;font-weight:600;color:rgb(0,149,246);cursor:pointer;}
+   /* addPost 게시물 이미지, 글씨 감싸기 */
+  .addPostWrap>.postSharesWrap>.addPost{display:flex;width:100%;height:90%;}
+    /* addPost 게시물 이미지 시작 */
+.addPost>.addImg{max-width:860px;max-height:860px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content: center;width:520px;height:100%;border-right:1px solid #dedede;margin-right:10px;}
+.addImg>.imageUploadSize{width:100%;height:100%;}
+.addImg>.imageUploadSize>img{width:100%;height:100%;object-fit:cover;object-position: center;}
+  .addPostWrap>.postSharesWrap>.addPost>.addImg>.images{display: flex; flex-direction: column;
+    align-items: center; justify-content: center; width: 100%;height: 80%;}
+    .addPostWrap>.postSharesWrap>.addPost>.addImg>.images>.imgUploadIcons{ width: 100%;  height: 40%;display:flex;justify-content: center; align-items: center;}
+    .addPostWrap>.postSharesWrap>.addPost>.addImg>.images>.imageText{width:100%;height:10%;display:flex;justify-content:center;align-items:center;font-size:18px;}
+    /* addPost 게시물 이미지 업로드 버튼 */
+  .addPostWrap>.postSharesWrap>.addPost>.addImg>.button>.inputFileBtn {padding: 5px 7px;
+  background-color:rgb(0,149,246);border-radius: 4px;color: white;cursor: pointer;font-size:15px;}
+  .addPostWrap>.postSharesWrap>.addPost>.addImg>.button>input{display:none;}
+
+
+   /* addPost 게시물 글씨 시작 */
+   .addPostWrap>.postSharesWrap>.addPost>.addContents{display:flex;flex:1;flex-direction:column;width:24%;height:100%;}
+   .addPost>.addContents>.user{width:100%;height:10%;display:flex;margin-top:5px;}
+   .addPost>.addContents>.user>.userProfile{width: 100%; height: 100%; display: flex;
+    align-items: center; font-size:18px;}
+   .addPost>.addContents>.user>.userProfile>.userImg{width:12%;height:100%;}
+   .addPost>.addContents>.user>.userProfile>.userImg>img{width:100%;height:100%;border-radius: 50%;}
+   .addPost>.addContents>.user>.userProfile>p{margin-left:10px;}
+   .addPost>.addContents>.user>.userName{position:sticky;}
+   .addPost>.addContents>.contents{width:100%;height:75%;  position: relative;padding-top:20px;}
+   .addPost>.addContents>.contents>textarea{width:100%;min-height:300px;border:none;resize:none; overflow-y: auto;overflow-x:hidden;outline:none;}
+   .addPost>.addContents>.contents>p{position:absolute; width: 100%; display: flex; justify-content: flex-end;font-size:16px;}
+   @media screen and (min-width:750px) and (max-width:1250px) {
+    .addPostWrap{width:750px;height:550px;}
+    .addPostWrap>.postSharesWrap{margin-top:22px;}
+    .addImg>.imageUploadSize{width:400px;height:400px;}
+    
+   }
+   @media screen and (min-width:501px)and (max-width:750px){
+    .addPostWrap{width:650px;}
+    .addPost>.addImg{width:350px;height:100%;}
+    .addImg>.imageUploadSize{width:100%;height:100%;}
+    .addPostWrap>.postSharesWrap>.addPost>.addContents{width:300px;}
+   }
+   @media screen and (max-width:500px){
+    .addPostWrap {width:100%;height:100%; overflow-x: hidden;padding-top:0;}
+    .addPostWrap>.postSharesWrap{width:85%;height:85%;margin-top:50px;}
+    .addPostWrap>.postSharesWrap>.postShare{ height: 5%; padding-bottom: 7px;display: flex;align-items: center;
+    justify-content: space-between;}
+    .addPostWrap>.postSharesWrap>.postShare>h4{font-size:14px;}
+   .addPostWrap>.postSharesWrap>.addPost{height:95%;flex-direction:column;overflow-x:hidden;}
+   .addPost>.addImg{width:100%;height:75%;}
+   .addImg>.imageUploadSize {width: 100%; height: 100%; object-fit: cover;}
+   .addImg>.imageUploadSize>img {width: 100%; height: 100%;}
+   .addPost>.addImg>.images{min-height:140px;}
+   .addPostWrap>.postSharesWrap>.addPost>.addImg>.images>.imageText{font-size:14px;}
+   .addPost>.addImg>.button{margin-top:10px;}
+   .addImg>.imageUploadSize{width:100%;height:100%;}
+   .hrXGvK .addImg>.imageUploadSize>img{width:100%;height:100%;object-fit:none;object-position: center;}
+   .addPostWrap>.postSharesWrap>.addPost>.addContents{width:100%;height: 30%;margin-top: 10px;}
+   .addPost>.addContents>.user{height: 15%; margin-top: 0; align-items: center; justify-content: center;}
+   .addPost>.addContents>.contents{width: 100%;height: 60%; position: relative; padding-top: 20px;}
+   .addPost>.addContents>.contents>textarea {height: 80%; min-height: 0;}
+   .addPost>.addContents>.contents>p{height:0;position:unset}
   }
 
   /* addPost 게시물 글씨 시작 */

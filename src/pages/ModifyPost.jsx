@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import Modal from '../hooks/modal';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import ModifyModal from '../components/modify/ModifyModal';
+import React, { useState } from "react";
+import Modal from "../hooks/modal";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import ModifyModal from "../components/modify/ModifyModal";
 
 const ModifyPost = () => {
   const [showModalAdd, setShowModalAdd] = useState(true);
