@@ -8,7 +8,7 @@ import {
 } from "../api/api";
 import DetailFooter from "../components/detail/DetailFooter";
 import { QueryClient, useMutation, useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ProfileLine from "../components/profile/ProfileLine";
 import WriterInfoContainer from "../components/detail/WriterInfoContainer";
 import ProfileBox from "../components/profile/ProfileBox";
@@ -36,6 +36,7 @@ const Detail = () => {
   const onClickDeletePost = async () => {
     deleteMutation();
   };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -102,9 +103,9 @@ const Detail = () => {
           <ProfileLine />
           <ProfilePostsWrap>
             {profilePost.content &&
-              profilePost.content.map((post) => {
-                return <ProfileBox key={post.postId} post={post} />;
-              })}
+              profilePost.content.map((post) => (
+                <ProfileBox key={post.postId} post={post} />
+              ))}
           </ProfilePostsWrap>
         </ProfileContainer>
       </ProfileWrap>
@@ -171,7 +172,7 @@ const ProfileContainer = styled.div`
 const StDetailContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 900px;
+  height: 700px;
   margin-bottom: 5vh;
   border: 1px solid black;
 `;
