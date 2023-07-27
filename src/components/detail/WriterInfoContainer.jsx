@@ -16,6 +16,7 @@ const WriterInfoContainer = ({
       createdAt,
       media
     );
+
   return (
     <StProfileContainer media={media}>
       <div className="lineContent">
@@ -74,6 +75,11 @@ const StProImgContainer = styled.div`
 const StProBodyContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  .time {
+    font-size: 13px;
+    color: grey;
+  }
 `;
 const StWriterContent = styled.div`
   display: flex;

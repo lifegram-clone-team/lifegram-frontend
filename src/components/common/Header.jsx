@@ -1,52 +1,56 @@
-import React from "react";
-import { GoHome, GoHomeFill } from "react-icons/go";
-import { AiOutlinePlusSquare, AiOutlineSmile } from "react-icons/ai";
-import { BiLogOut } from "react-icons/bi";
-import { BsInstagram } from "react-icons/bs";
-import InstaGram from "../../assets/instagram.svg";
-import { styled } from "styled-components";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
-import { getUserInfo } from "../../api/api.js";
+import React from 'react';
+import { GoHome, GoHomeFill } from 'react-icons/go';
+import { AiOutlinePlusSquare, AiOutlineSmile } from 'react-icons/ai';
+import { BiLogOut } from 'react-icons/bi';
+import { BsInstagram } from 'react-icons/bs';
+import InstaGram from '../../assets/instagram.svg';
+import { styled } from 'styled-components';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getUserInfo } from '../../api/api.js';
 
 const Header = () => {
-  const { isLoading, error, data } = useQuery("headerUserImg", getUserInfo);
+  const { isLoading, error, data } = useQuery('headerUserImg', getUserInfo);
   const navigate = useNavigate();
   const onClickHandleLogout = () => {
-    localStorage.removeItem("accessToken");
-    window.location.replace("/");
+    localStorage.removeItem('accessToken');
+    window.location.replace('/');
   };
 
   const onClickRenderProfile = () => {
-    window.location.href = "/profile";
+    window.location.href = '/profile';
+  };
+  const reloadClickHandler = () => {
+    window.location.href = '/profile';
+    console.log('hi');
   };
   return (
     <PageContainer>
       <HeaderContainer>
         <HeaderLogo>
-          <img src={InstaGram} className="smallWidth" />
-          <BsInstagram className="bigWidth" onClick={() => navigate("/main")} />
+          <img src={InstaGram} className='smallWidth' />
+          <BsInstagram className='bigWidth' onClick={() => navigate('/main')} />
         </HeaderLogo>
         <HeaderList>
-          <SNavLink to="/main">
-            <GoHome className="noneActiveIcon" />
-            <GoHomeFill className="activeIcon" />
-            <p className="smallWidth">홈</p>
+          <SNavLink to='/main'>
+            <GoHome className='noneActiveIcon' />
+            <GoHomeFill className='activeIcon' />
+            <p className='smallWidth'>홈</p>
           </SNavLink>
-          <SNavLink to="/add">
+          <SNavLink to='/add'>
             <AiOutlinePlusSquare />
-            <p className="smallWidth">만들기</p>
+            <p className='smallWidth'>만들기</p>
           </SNavLink>
           {/* <SNavLink to="/profile">  */}
           <StLink onClick={onClickRenderProfile}>
-            {data && <img src={data.profileImgUrl} alt="유저프로필" />}
-            <p className="smallWidth">프로필</p>
+            {data && <img src={data.profileImgUrl} alt='유저프로필' />}
+            <p className='smallWidth'>프로필</p>
           </StLink>
           {/* </SNavLink> */}
         </HeaderList>
         <HeaderLogout onClick={onClickHandleLogout}>
           <BiLogOut />
-          <p className="smallWidth">로그아웃</p>
+          <p className='smallWidth'>로그아웃</p>
         </HeaderLogout>
       </HeaderContainer>
       <Outlet />

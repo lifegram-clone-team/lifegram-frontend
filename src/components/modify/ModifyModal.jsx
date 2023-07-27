@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
-import useInput from "../../hooks/useInput";
-import styled from "styled-components";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { createPost, getPostDetail } from "../../api/api";
-import { getUserInfo } from "../../api/api";
+import React, { useEffect, useState } from 'react';
+import useInput from '../../hooks/useInput';
+import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { createPost, getPostDetail } from '../../api/api';
+import { getUserInfo } from '../../api/api';
 
 const ModalModify = () => {
   const { id } = useParams();
   const [edited, setEdited] = useState(false);
-  const [content, setContent, handleContentsChange] = useInput("");
-  const [addImg, setAddImg, handleImgChange] = useInput("");
-  const [userName, setUserName] = useState("");
-  const [profileUrl, setProfileUrl] = useState("");
-  const [image, setImage] = useState("");
+  const [content, setContent, handleContentsChange] = useInput('');
+  const [addImg, setAddImg, handleImgChange] = useInput('');
+  const [userName, setUserName] = useState('');
+  const [profileUrl, setProfileUrl] = useState('');
+  const [image, setImage] = useState('');
   const [inputCount, setInputCount] = useState(0);
   const [addUser, setAddUser] = useState(null);
-  const token = localStorage.getItem("accessToken");
-  const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
-  const { data: postDetailData } = useQuery("postDetail", () =>
-    getPostDetail(id)
-  );
+  const token = localStorage.getItem('accessToken');
+  const { isLoading, error, data } = useQuery('profileUserImg', getUserInfo);
+  const { data: postDetailData } = useQuery('postDetail', () => getPostDetail(id));
   const navigate = useNavigate();
 
   // console.log(data)
@@ -34,6 +32,7 @@ const ModalModify = () => {
   // }, []);
 
   const onModifyPost = async (e) => {
+    const URL = process.env.REACT_APP_API_URI;
     e.preventDefault();
     const contents = {
       content,
@@ -53,7 +52,7 @@ const ModalModify = () => {
     const maxLength = 2200;
 
     if (content.length > maxLength) {
-      alert("최대 2200자까지 입력 가능합니다.");
+      alert('최대 2200자까지 입력 가능합니다.');
       e.target.value = content.substring(0, maxLength); // Truncate the content to the maximum length
     }
 
@@ -62,42 +61,42 @@ const ModalModify = () => {
   };
   return (
     <ModifyPosts>
-      <form className="modifyPostWrap" onSubmit={onModifyPost}>
-        <div className="postSharesWrap">
-          <div className="postShare">
-            <button type="button" onClick={clickPrevHandler}>
+      <form className='modifyPostWrap' onSubmit={onModifyPost}>
+        <div className='postSharesWrap'>
+          <div className='postShare'>
+            <button type='button' onClick={clickPrevHandler}>
               취소
             </button>
             <h4>새 게시물 공유하기</h4>
-            <div className="finishBtn">
-              <button type="submit">완료</button>
+            <div className='finishBtn'>
+              <button type='submit'>완료</button>
             </div>
           </div>
-          <div className="modifyPost">
-            <div className="addImg">
-              <img src={postDetailData?.postImgUrl} alt="" />
+          <div className='modifyPost'>
+            <div className='addImg'>
+              <img src={postDetailData?.postImgUrl} alt='' />
             </div>
-            <div className="addContents">
-              <div className="user">
-                <div className="userProfile">
-                  <div className="userImg">
-                    <img src={data?.profileImgUrl} alt="" />
+            <div className='addContents'>
+              <div className='user'>
+                <div className='userProfile'>
+                  <div className='userImg'>
+                    <img src={data?.profileImgUrl} alt='' />
                   </div>
                   <p>{data?.userName}</p>
                 </div>
               </div>
-              <div className="contents">
+              <div className='contents'>
                 <textarea
-                  cols="30"
-                  rows={content.length > 500 ? "20" : "10"}
-                  placeholder="문구 입력"
-                  maxLength="2200"
+                  cols='30'
+                  rows={content.length > 500 ? '20' : '10'}
+                  placeholder='문구 입력'
+                  maxLength='2200'
                   value={content}
                   onChange={handleContentsChange}
                   onInput={checkContents}
-                  className="content"
+                  className='content'
                 >
-                  {inputCount > 2200 ? "errorText" : ""}{" "}
+                  {inputCount > 2200 ? 'errorText' : ''}{' '}
                 </textarea>
                 <p>
                   <span>{inputCount}</span>
@@ -203,24 +202,14 @@ const ModifyPosts = styled.div`
     width: 100%;
     height: 80%;
   }
-  .modifyPostWrap
-    > .postSharesWrap
-    > .modifyPost
-    > .addImg
-    > .images
-    > .imgUploadIcons {
+  .modifyPostWrap > .postSharesWrap > .modifyPost > .addImg > .images > .imgUploadIcons {
     width: 100%;
     height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .modifyPostWrap
-    > .postSharesWrap
-    > .modifyPost
-    > .addImg
-    > .images
-    > .imageText {
+  .modifyPostWrap > .postSharesWrap > .modifyPost > .addImg > .images > .imageText {
     width: 100%;
     height: 10%;
     display: flex;
@@ -229,12 +218,7 @@ const ModifyPosts = styled.div`
     font-size: 18px;
   }
   /* modifyPost 게시물 이미지 업로드 버튼 */
-  .modifyPostWrap
-    > .postSharesWrap
-    > .modifyPost
-    > .addImg
-    > .button
-    > .inputFileBtn {
+  .modifyPostWrap > .postSharesWrap > .modifyPost > .addImg > .button > .inputFileBtn {
     padding: 5px 7px;
     background-color: rgb(0, 149, 246);
     border-radius: 4px;
