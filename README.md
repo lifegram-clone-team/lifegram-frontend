@@ -15,13 +15,6 @@
 ### 2. 개발 환경
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> ![react](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white) ![JSON Server](https://img.shields.io/badge/JSON_Server-FF6384?style=for-the-badge&logo=json&logoColor=white) ![axios](https://img.shields.io/badge/axios-35495E?style=for-the-badge&logo=axios&logoColor=white) ![styled-components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) ![react-query](https://img.shields.io/badge/react--query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white) 
 
-
-
-
-
-[![React-Query](https://img.shields.io/badge/react--query-blue?style=for-the-badge&logo=https://github.com/lifegram-clone-team/lifegram-frontend/assets/56420106/50ffbe42-a494-41e7-9768-205290333518)](https://github.com/tannerlinsley/react-query)
-
-
 <br />
 
 ### 3. 프로젝트 내용
