@@ -23,8 +23,8 @@ const CommentContainer = ({ comment, postId }) => {
       </StProImgContainer>
       <StCommentBody>
         <StProfile>
-          <span className='writer'>{comment.writer}</span>
-          <div>{comment.content}</div>
+          <span className="writer">{comment.writer}</span>
+          <div className="commentContent">{comment.content}</div>
         </StProfile>
         <StTimeDelete>
           <div className='time'>{comment.createdAt.slice(2, 10)}</div>
@@ -75,9 +75,12 @@ const StProfile = styled.div`
   font-size: 16px;
   padding-right: 15px;
   margin-bottom: 5px;
-
   .writer {
     font-weight: 700;
+  }
+  .commentContent {
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
 `;
 

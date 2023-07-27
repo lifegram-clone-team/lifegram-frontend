@@ -1,9 +1,14 @@
 import { styled, css } from "styled-components";
 import CommentContainer from "../components/detail/CommentContainer";
-import { getPostDetail, getUserPosts } from "../api/api";
+import {
+  deletePost,
+  getPostDetail,
+  getUserInfo,
+  getUserPosts,
+} from "../api/api";
 import DetailFooter from "../components/detail/DetailFooter";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { QueryClient, useMutation, useQuery } from "react-query";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ProfileLine from "../components/profile/ProfileLine";
 import WriterInfoContainer from "../components/detail/WriterInfoContainer";
 import ProfileBox from "../components/profile/ProfileBox";
@@ -18,7 +23,19 @@ const Detail = () => {
   const { data: profilePost } = useQuery("profilepost", () =>
     getUserPosts(1, 6)
   );
-  console.log("profilepost", profilePost);
+  const { data: userData } = useQuery("userData", getUserInfo);
+
+  const { mutate: deleteMutation } = useMutation(
+    () => deletePost(data.postId),
+    {
+      onSuccess: () => {
+        QueryClient.invalidateQueries("posts");
+      },
+    }
+  );
+  const onClickDeletePost = async () => {
+    deleteMutation();
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -27,7 +44,6 @@ const Detail = () => {
   if (isError) {
     return <div>{error}</div>;
   }
-
   return (
     <HeaderMargin>
       <ProfileWrap>
@@ -42,6 +58,19 @@ const Detail = () => {
                   writerImgUrl={data.writerImgUrl}
                   writer={data.writer}
                 />
+                {userData && userData.userName === data.writer && (
+                  <StModify>
+                    <Link to={`/modify/${data.postId}`}>
+                      <div className="modify">수정</div>
+                    </Link>
+                    <div
+                      className="delete"
+                      onClick={() => onClickDeletePost(data.postId)}
+                    >
+                      삭제
+                    </div>
+                  </StModify>
+                )}
                 <hr />
                 <WriterInfoContainer
                   writerImgUrl={data.writerImgUrl}
@@ -74,15 +103,42 @@ const Detail = () => {
           <ProfileLine />
           <ProfilePostsWrap>
             {profilePost.content &&
-              profilePost.content.map((post) => {
-                return <ProfileBox key={post.postId} post={post} />;
-              })}
+              profilePost.content.map((post) => (
+                <ProfileBox key={post.postId} post={post} />
+              ))}
           </ProfilePostsWrap>
         </ProfileContainer>
       </ProfileWrap>
     </HeaderMargin>
   );
 };
+const StModify = styled.div`
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  color: grey;
+  a {
+    all: unset;
+  }
+
+  .modify {
+    cursor: pointer;
+    &:hover {
+      color: black;
+      font-weight: bold;
+    }
+  }
+
+  .delete {
+    cursor: pointer;
+    &:hover {
+      color: red;
+      font-weight: bold;
+    }
+  }
+`;
 
 const HeaderMargin = styled.div`
   margin-left: 15vw;
@@ -116,7 +172,7 @@ const ProfileContainer = styled.div`
 const StDetailContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 900px;
+  height: 700px;
   margin-bottom: 5vh;
   border: 1px solid black;
 `;
