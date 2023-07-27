@@ -18,16 +18,18 @@ const WriterInfoContainer = ({
     );
   return (
     <StProfileContainer media={media}>
-      <StProImgContainer>
-        <img src={writerImgUrl} alt="writerimg" />
-      </StProImgContainer>
-      <StProBodyContainer>
-        <StWriterContent>
-          <span className="writer">{writer}</span>
-          <span>{content}</span>
-        </StWriterContent>
-        <div className="time ">{createdAt}</div>
-      </StProBodyContainer>
+      <div className="lineContent">
+        <StProImgContainer>
+          <img src={writerImgUrl} alt="writerimg" />
+        </StProImgContainer>
+        <StProBodyContainer>
+          <StWriterContent>
+            <span className="writer">{writer}</span>
+            <span className="content">{content}</span>
+          </StWriterContent>
+          <div className="time">{createdAt && createdAt.slice(0, 10)}</div>
+        </StProBodyContainer>
+      </div>
     </StProfileContainer>
   );
 };
@@ -36,12 +38,11 @@ export default WriterInfoContainer;
 
 const StProfileContainer = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  gap: 15px;
-  padding-bottom: 10px;
   margin-top: 10px;
-  align-items: center;
-  padding-left: 15px;
+  padding: 0 10px 10px 10px;
+  box-sizing: border-box;
 
   ${(props) =>
     props.media === "media" &&
@@ -50,19 +51,24 @@ const StProfileContainer = styled.div`
         display: none;
       }
     `}
+  .lineContent {
+    display: flex;
+    width: 100%;
+  }
+  .time {
+    margin-top: 10px;
+    margin-left: auto;
+    color: gray;
+  }
 `;
 
 const StProImgContainer = styled.div`
-  min-width: 40px;
-  height: 40px;
-
-  border-radius: 50%;
-  overflow: hidden;
-
+  margin-bottom: auto;
   img {
-    width: 100%;
-    height: 100%;
+    width: 40px;
+    height: 40px;
     object-fit: cover;
+    border-radius: 50%;
   }
 `;
 const StProBodyContainer = styled.div`
@@ -71,11 +77,15 @@ const StProBodyContainer = styled.div`
 `;
 const StWriterContent = styled.div`
   display: flex;
-  gap: 10px;
-  padding-right: 15px;
-
   .writer {
     font-size: 16px;
     font-weight: 700;
+    display: flex;
+    margin-left: 10px;
+  }
+  .content {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    margin-left: 10px;
   }
 `;
