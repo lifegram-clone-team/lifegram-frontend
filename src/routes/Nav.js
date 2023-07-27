@@ -10,6 +10,7 @@ import ModifyPost from '../pages/ModifyPost';
 import NotAuthRoutes from './NotAuthRoutes';
 import AuthRoutes from './AuthRoutes';
 import Detail from '../pages/Detail';
+import TqTq from '../pages/TqTq';
 
 const Nav = () => {
   const user = Boolean(localStorage.getItem('accessToken'));
@@ -31,6 +32,7 @@ const Nav = () => {
         </Route>
         <Route path='/add' element={<AddPost />} />
       <Route path='/modify/:id' element={<ModifyPost />} />
+      <Route path='/tqtq' element={<TqTq />} />
       </Route>
 
       <Route path={'/*'} element={<div>404</div>} />

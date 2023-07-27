@@ -24,7 +24,7 @@ const ModifyModal = () => {
   const { data } = useQuery("profileUserImg", getUserInfo);
   const navigate=useNavigate()
   const { data: postDetailData } = useQuery("postDetail", () => getPostDetail(id));
- console.log(postDetailData)
+//  console.log(postDetailData)
 
  
   const onModifyPost = async (e)=>{
@@ -71,7 +71,7 @@ const ModifyModal = () => {
         </div>
           <div className="modifyPost">
             <div className="addImg">
-             <img src={postDetailData.postImgUrl} alt="" />
+             <img src={postDetailData?.postImgUrl} alt="" />
             </div>
             <div className="modifyContents">
             <div className="user">
@@ -119,8 +119,7 @@ const ModifyPosts = styled.div`
 .modifyPost>.addImg{max-width:860px;max-height:860px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content: center;width:520px;height:100%;border-right:1px solid #dedede;margin-right:10px;}
 .addImg>.imageUploadSize{width:100%;height:100%;}
 .addImg>.imageUploadSize>img{width:100%;height:100%;object-fit:cover;object-position: center;}
-  .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.images{display: flex; flex-direction: column;
-    align-items: center; justify-content: center; width: 100%;height: 80%;}
+  .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.img{width: 100%;height: 80%;object-fit: cover;object-position: center;}
     .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.images>.imgUploadIcons{ width: 100%;  height: 40%;display:flex;justify-content: center; align-items: center;}
     .modifyPostWrap>.postSharesWrap>.modifyPost>.addImg>.images>.imageText{width:100%;height:10%;display:flex;justify-content:center;align-items:center;font-size:18px;}
     /* modifyPost 게시물 이미지 업로드 버튼 */
