@@ -1,7 +1,7 @@
 import { styled, css } from "styled-components";
 import CommentContainer from "./CommentContainer";
 import WriterInfoContainer from "./WriterInfoContainer";
-import { deletePost, getPostDetail } from "../../api/api";
+import { deletePost, getPostDetail, getUserInfo } from "../../api/api";
 import { useMutation } from "react-query";
 import { useQueryClient } from "react-query";
 import DetailFooter from "./DetailFooter";
@@ -33,6 +33,8 @@ const DetailModal = ({ postId,  setOpenModal }) => {
     getPostDetail(postId)
   );
 
+  const { data: userData } = useQuery("userData", getUserInfo);
+  
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -49,14 +51,16 @@ const DetailModal = ({ postId,  setOpenModal }) => {
           <img src={data.postImgUrl} alt="img" />
         </StImgContainer>
         <StPost>
+        { userData && userData.userName === data.writer &&
           <StModify >
-            <Link to={`/modify/${postId}`}>
+            <StLink to={`/modify/${postId}`}>
               <div className="modify">수정</div>
-            </Link>
+            </StLink>
             <div className="delete" onClick={() => onClickDeletePost(postId)}>
               삭제
             </div>
           </StModify>
+        }
           <WriterInfoContainer
             writerImgUrl={data.writerImgUrl}
             writer={data.writer}
@@ -113,12 +117,6 @@ const StModalBg = styled.div`
   position: fixed;
   opacity: 0.7;
   background-color: rgb(0, 0, 0);
-
-  /* ${(props) =>
-    props.isprof === "true" &&
-    css`
-      opacity: 0.4;
-    `} */
 `;
 
 const StDetailModal = styled.div`
@@ -176,7 +174,6 @@ const StPost = styled.div`
   }
 
   .content {
-    padding-left: 55px;
     padding-right: 15px;
   }
 
@@ -207,17 +204,23 @@ const StModify = styled.div`
   top: 20px;
   color: grey;
 
-  /* ${(props) =>
-    props.isprof === "false" &&
-    css`
-      display: none;
-    `} */
-
   .modify {
     cursor: pointer;
+    &:hover {
+      color: black;
+      font-weight: bold;
+    }
   }
 
   .delete {
     cursor: pointer;
+    &:hover {
+      color: red;
+      font-weight: bold;
+    }
   }
+`;
+const StLink = styled(Link)`
+  text-decoration: none;
+  color: grey;
 `;

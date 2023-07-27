@@ -38,7 +38,6 @@ const Main = () => {
 
   // 모든 페이지의 데이터를 하나의 배열로 합치기
   const allPosts = data?.pages.flatMap((page) => page.content) || [];
-  data && console.log(allPosts);
 
   return (
     <HeaderMain>

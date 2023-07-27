@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { createPost } from '../../api/api';
 import { getUserInfo } from '../../api/api';
+import { notification } from 'antd';
 import imageCompression from 'browser-image-compression';
 
 const ModalAdd = () => {
@@ -26,7 +27,6 @@ const ModalAdd = () => {
   const token = localStorage.getItem('accessToken');
   const navigate = useNavigate();
   const { isLoading, error, data } = useQuery('profileUserImg', getUserInfo);
-  console.log(data);
 
   const upLoadImgHandler = async (e) => {
     const file = e.target.files[0];
@@ -55,7 +55,9 @@ const ModalAdd = () => {
   const onClickPostPost = async (e) => {
     e.preventDefault();
     if (content.length === 0 || !image) {
-      alert('게시글과 이미지를 넣어주세요');
+      notification.warning({
+        message: '게시글과 이미지를 넣어주세요..',
+      });
     }
     const contents = {
       content,
@@ -70,14 +72,11 @@ const ModalAdd = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response);
-      // Only navigate if the post was successful
       navigate(-1);
     } catch (error) {
       console.log(error);
     }
     setContent('');
-    console.log(content);
   };
   const clickPrevHandler = () => {
     navigate(-1);

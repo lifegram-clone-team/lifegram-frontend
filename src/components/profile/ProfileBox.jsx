@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 const ProfileBox = ({ post }) => {
   const navigate = useNavigate();
   const goPathHandle = (id) => {
-    navigate(`/post/${id}`);
+    window.location.href = `/post/${id}`;
   };
   return (
     <Box src={post.profileImgUrl} onClick={() => goPathHandle(post.postId)} />
@@ -19,6 +19,7 @@ const Box = styled.img`
   margin-bottom: 10px;
   box-sizing: border-box;
   object-fit: cover;
+  cursor: pointer;
 
   img {
     width: 100%;

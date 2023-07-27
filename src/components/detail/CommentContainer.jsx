@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
+import { useQueryClient, useQuery } from 'react-query';
 import { styled } from 'styled-components';
-import { deleteComment } from '../../api/api';
+import { deleteComment, getUserInfo } from '../../api/api';
 
 const CommentContainer = ({ comment, postId }) => {
   const queryClient = useQueryClient();
@@ -11,6 +11,8 @@ const CommentContainer = ({ comment, postId }) => {
       queryClient.invalidateQueries('comments');
     },
   });
+
+  const { isLoading, error, data } = useQuery("userInfo", getUserInfo);
 
   const onClickDeleteComment = () => {
     mutate();
@@ -28,9 +30,11 @@ const CommentContainer = ({ comment, postId }) => {
         </StProfile>
         <StTimeDelete>
           <div className='time'>{comment.createdAt.slice(2, 10)}</div>
+          {data && comment.writer === data.userName && (
           <span className='delete' onClick={() => onClickDeleteComment(postId, comment.commentId)}>
             삭제
           </span>
+          )}
         </StTimeDelete>
       </StCommentBody>
     </StCommentContainer>
@@ -43,23 +47,19 @@ const StCommentContainer = styled.div`
   display: flex;
   margin-top: 30px;
   gap: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
   @media (max-width: 735px) {
     display: none;
   }
 `;
 
 const StProImgContainer = styled.div`
-  min-width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
   margin: 0 auto;
-
   img {
-    width: 100%;
-    height: 100%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     object-fit: cover;
   }
 `;
@@ -89,4 +89,7 @@ const StTimeDelete = styled.div`
   gap: 10px;
   font-size: 13px;
   color: grey;
+  .delete{
+    cursor: pointer;
+  }
 `;
