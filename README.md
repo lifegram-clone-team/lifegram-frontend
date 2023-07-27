@@ -1,7 +1,8 @@
+# Lifegram
+<br />
+
 ![인스타그램](https://github.com/lifegram-clone-team/lifegram-frontend/assets/56420106/18d022e1-2f59-4804-9cfd-9edbed68ebc5)
 
-> Lifegram
-<br />
 <br />
 <br />
 
@@ -12,7 +13,14 @@
 <br />
 
 ### 2. 개발 환경
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> ![react](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white) ![JSON Server](https://img.shields.io/badge/JSON_Server-FF6384?style=for-the-badge&logo=json&logoColor=white) ![axios](https://img.shields.io/badge/axios-35495E?style=for-the-badge&logo=axios&logoColor=white) ![styled-components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> ![react](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white) ![JSON Server](https://img.shields.io/badge/JSON_Server-FF6384?style=for-the-badge&logo=json&logoColor=white) ![axios](https://img.shields.io/badge/axios-35495E?style=for-the-badge&logo=axios&logoColor=white) ![styled-components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) ![react-query](https://img.shields.io/badge/react--query-FF4154?style=for-the-badge&logo=reactquery&logoColor=white) 
+
+
+
+
+
+[![React-Query](https://img.shields.io/badge/react--query-blue?style=for-the-badge&logo=https://github.com/lifegram-clone-team/lifegram-frontend/assets/56420106/50ffbe42-a494-41e7-9768-205290333518)](https://github.com/tannerlinsley/react-query)
+
 
 <br />
 
@@ -43,12 +51,8 @@
 - 인스타그램은 앱이 따로 있어 핸드폰 사이즈의 반응형까지 구현되어이 있지 않음
   - 웹페이지로 전체 구현을 하는 만큼 웹, 태블릿, 스마트폰 반응형 전부 구현
 
-
 <br />
 <br />
-<br />
-
-
 
 # 🙋 My Role
 
@@ -69,8 +73,6 @@
 
 <br />
 <br />
-<br />
-
 
 # 🔎 Trouble Shooting
 
@@ -89,7 +91,7 @@
     
 <br />
 <br />
-<br />
+
 
 # 💡 Review
 ### 후기
@@ -103,17 +105,14 @@ git pull, merge 에러, 정립되지 않은 규칙(폴더 구조, code conventio
 **→Deadline을 지키고 다양한 UX테스트를 위해 디테일하고 타이트한 일정 조율이 필요할 것.**
 
 <br />
-<br />
 
-### 2. 코드 리뷰
+### 코드 리뷰
 
 - 깃 컨벤션이 영어와 한글이 섞여 있어 통일성이 적음
 - react-query를 이용한 예외처리가 전체적으로 되어있지 않음
 - 주석이 필요한 코드는 좋은 코드가 아니므로 주석이 필요하다면 네이밍이 명확한지 주석이 필요한지 확인해야함
   css 전처리기를 선택했으면 그 전처리기의 장점을 명확하게 하는 것이 좋으나 현재 코드에서는 스타일 컴포넌트의 장점을 명확히 살리고 있지 않음
 
-<br />
-<br />
 <br />
 <br />
 
@@ -123,8 +122,3 @@ git pull, merge 에러, 정립되지 않은 규칙(폴더 구조, code conventio
 2. 소셜 로그인
 3. 팔로잉 팔로워
 4. 인스타 스토리 CRUD
-
-<br />
-<br />
-<br />
-<br />
