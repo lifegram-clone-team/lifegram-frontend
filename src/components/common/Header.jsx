@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoHome, GoHomeFill } from 'react-icons/go';
-import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { AiOutlinePlusSquare, AiOutlineSmile } from 'react-icons/ai';
 import { BiLogOut } from 'react-icons/bi';
 import { BsInstagram } from 'react-icons/bs';
 import InstaGram from '../../assets/instagram.svg';
@@ -16,35 +16,41 @@ const Header = () => {
     localStorage.removeItem('accessToken');
     window.location.replace('/');
   };
+
+  const onClickRenderProfile = () => {
+    window.location.href = '/profile';
+  };
   const reloadClickHandler = () => {
     window.location.href = '/profile';
     console.log('hi');
-  }
+  };
   return (
     <PageContainer>
       <HeaderContainer>
         <HeaderLogo>
-          <img src={InstaGram} className="smallWidth" />
-          <BsInstagram className="bigWidth" onClick={() => navigate('/main')} />
+          <img src={InstaGram} className='smallWidth' />
+          <BsInstagram className='bigWidth' onClick={() => navigate('/main')} />
         </HeaderLogo>
         <HeaderList>
-          <SNavLink to="/main">
-            <GoHome className="noneActiveIcon" />
-            <GoHomeFill className="activeIcon" />
-            <p className="smallWidth">홈</p>
+          <SNavLink to='/main'>
+            <GoHome className='noneActiveIcon' />
+            <GoHomeFill className='activeIcon' />
+            <p className='smallWidth'>홈</p>
           </SNavLink>
-          <SNavLink to="/add">
+          <SNavLink to='/add'>
             <AiOutlinePlusSquare />
-            <p className="smallWidth">만들기</p>
+            <p className='smallWidth'>만들기</p>
           </SNavLink>
-          <SNavLink to="/profile">
-            {data && <img src={data.profileImgUrl} alt="유저프로필"/>}
-            <p className="smallWidth">프로필</p>
-          </SNavLink>
+          {/* <SNavLink to="/profile">  */}
+          <StLink onClick={onClickRenderProfile}>
+            {data && <img src={data.profileImgUrl} alt='유저프로필' />}
+            <p className='smallWidth'>프로필</p>
+          </StLink>
+          {/* </SNavLink> */}
         </HeaderList>
         <HeaderLogout onClick={onClickHandleLogout}>
           <BiLogOut />
-          <p className="smallWidth">로그아웃</p>
+          <p className='smallWidth'>로그아웃</p>
         </HeaderLogout>
       </HeaderContainer>
       <Outlet />
@@ -159,6 +165,59 @@ const HeaderList = styled.div`
     margin: 10px;
   }
 `;
+
+const StLink = styled.div`
+  color: black;
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  text-decoration-line: none;
+  img {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s linear;
+  }
+  svg {
+    font-size: 2rem;
+  }
+  .activeIcon {
+    display: none;
+  }
+  &.active {
+    font-weight: bold;
+    color: black;
+    img {
+      border: 1px solid black;
+    }
+    .noneActiveIcon {
+      display: none;
+    }
+    .activeIcon {
+      display: unset;
+    }
+  }
+  &:hover {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+    svg,
+    img {
+      transform: scale(1.03);
+    }
+  }
+  @media (max-width: 760px) {
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+      background-color: unset;
+      transform: scale(1.03);
+    }
+  }
+`;
+
 const SNavLink = styled(NavLink)`
   color: black;
   margin: 4px 0;

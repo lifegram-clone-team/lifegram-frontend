@@ -4,7 +4,6 @@ import { styled } from 'styled-components';
 import { deleteComment } from '../../api/api';
 
 const CommentContainer = ({ comment, postId }) => {
-  console.log(comment);
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation(() => deleteComment(postId, comment.commentId), {
@@ -16,6 +15,7 @@ const CommentContainer = ({ comment, postId }) => {
   const onClickDeleteComment = () => {
     mutate();
   };
+
   return (
     <StCommentContainer>
       <StProImgContainer>
@@ -23,11 +23,11 @@ const CommentContainer = ({ comment, postId }) => {
       </StProImgContainer>
       <StCommentBody>
         <StProfile>
-          <span className='writer'>{comment.writer}</span>
-          <div>{comment.content}</div>
+          <span className="writer">{comment.writer}</span>
+          <div className="commentContent">{comment.content}</div>
         </StProfile>
         <StTimeDelete>
-          <div className='time'>{comment.createdAt}</div>
+          <div className='time'>{comment.createdAt.slice(2, 10)}</div>
           <span className='delete' onClick={() => onClickDeleteComment(postId, comment.commentId)}>
             삭제
           </span>
@@ -75,9 +75,12 @@ const StProfile = styled.div`
   font-size: 16px;
   padding-right: 15px;
   margin-bottom: 5px;
-
   .writer {
     font-weight: 700;
+  }
+  .commentContent {
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
 `;
 
