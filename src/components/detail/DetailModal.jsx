@@ -1,15 +1,15 @@
-import { styled, css } from 'styled-components';
-import CommentContainer from './CommentContainer';
-import WriterInfoContainer from './WriterInfoContainer';
-import { deletePost, getPostDetail } from '../../api/api';
-import { useMutation } from 'react-query';
-import { useQueryClient } from 'react-query';
-import DetailFooter from './DetailFooter';
-import { Link } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import ReactDom from 'react-dom';
+import { styled, css } from "styled-components";
+import CommentContainer from "./CommentContainer";
+import WriterInfoContainer from "./WriterInfoContainer";
+import { deletePost, getPostDetail } from "../../api/api";
+import { useMutation } from "react-query";
+import { useQueryClient } from "react-query";
+import DetailFooter from "./DetailFooter";
+import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import ReactDom from "react-dom";
 
-const DetailModal = ({ postId, isProf, setOpenModal }) => {
+const DetailModal = ({ postId,  setOpenModal }) => {
   // const token = localStorage.getItem('accessToken');
 
   //로직 시작
@@ -22,14 +22,16 @@ const DetailModal = ({ postId, isProf, setOpenModal }) => {
 
   const { mutate: deleteMutation } = useMutation(() => deletePost(postId), {
     onSuccess: () => {
-      queryClient.invalidateQueries('posts');
+      queryClient.invalidateQueries("posts");
     },
   });
   const onClickDeletePost = async () => {
     deleteMutation();
   };
 
-  const { isLoading, isError, data, error } = useQuery('postdetail', () => getPostDetail(postId));
+  const { isLoading, isError, data, error } = useQuery("postdetail", () =>
+    getPostDetail(postId)
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -38,36 +40,45 @@ const DetailModal = ({ postId, isProf, setOpenModal }) => {
   if (isError) {
     return <div>{error}</div>;
   }
-
+  // 잘못된 사진을 가져다 놓음
   return ReactDom.createPortal(
     <StModal>
       <StModalBg onClick={onClickOpenModal} />
       <StDetailModal>
         <StImgContainer>
-          <img src={data.postImgUrl} alt='img' />
+          <img src={data.postImgUrl} alt="img" />
         </StImgContainer>
         <StPost>
-          <StModify isProf={isProf}>
+          <StModify >
             <Link to={`/modify/${postId}`}>
-            <div className='modify'>수정</div>
+              <div className="modify">수정</div>
             </Link>
-            <div className='delete' onClick={() => onClickDeletePost(postId)}>
+            <div className="delete" onClick={() => onClickDeletePost(postId)}>
               삭제
             </div>
           </StModify>
-          <WriterInfoContainer writerImgUrl={data.writerImgUrl} writer={data.writer} />
+          <WriterInfoContainer
+            writerImgUrl={data.writerImgUrl}
+            writer={data.writer}
+          />
           <hr />
           <WriterInfoContainer
             writerImgUrl={data.writerImgUrl}
             writer={data.writer}
             content={data.content}
             createdAt={data.createdAt}
-            media='media'
+            media="media"
           />
           <StCommentBox>
             {data &&
               data.comments?.map((comment) => {
-                return <CommentContainer key={comment.commentId} comment={comment} postId={postId} />;
+                return (
+                  <CommentContainer
+                    key={comment.commentId}
+                    comment={comment}
+                    postId={postId}
+                  />
+                );
               })}
           </StCommentBox>
           <DetailFooter
@@ -79,7 +90,7 @@ const DetailModal = ({ postId, isProf, setOpenModal }) => {
         </StPost>
       </StDetailModal>
     </StModal>,
-    document.getElementById('portal')
+    document.getElementById("portal")
   );
 };
 
@@ -100,8 +111,14 @@ const StModalBg = styled.div`
   height: 100vh;
   inset: 0px;
   position: fixed;
-  opacity: 0.65;
+  opacity: 0.7;
   background-color: rgb(0, 0, 0);
+
+  /* ${(props) =>
+    props.isprof === "true" &&
+    css`
+      opacity: 0.4;
+    `} */
 `;
 
 const StDetailModal = styled.div`
@@ -111,6 +128,7 @@ const StDetailModal = styled.div`
   width: 80%;
   height: 90%;
   border-radius: 5px;
+
   background-color: white;
   z-index: 1;
 
@@ -188,9 +206,9 @@ const StModify = styled.div`
   right: 10px;
   top: 20px;
   color: grey;
-/* 
-  ${(props) =>
-    props.isProf === 'false' &&
+
+  /* ${(props) =>
+    props.isprof === "false" &&
     css`
       display: none;
     `} */

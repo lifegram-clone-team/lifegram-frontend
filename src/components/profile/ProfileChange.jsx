@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
-import {AiOutlinePicture} from 'react-icons/ai';
-import {RxVideo} from 'react-icons/rx';
-import useInput from "../../hooks/useInput";
+import { AiOutlinePicture } from "react-icons/ai";
 import imageCompression from "browser-image-compression";
+import useInput from "../../hooks/useInput";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ProfileChange = ({ setOpenModal }) => {
+const ProfileChange = () => {
   const [fileImg, setFileImg] = useState("");
   const [addImg, setAddImg] = useInput("");
   const [image, setImage] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const token = localStorage.getItem("accessToken");
   const navigate=useNavigate() 
@@ -44,71 +44,78 @@ const ProfileChange = ({ setOpenModal }) => {
   };
 
   const onClickProfileUpdate = async (e) => {
-   e.preventDefault();
-   if (!image) {
-   alert('이미지를 넣어주세요');
-   }
+    e.preventDefault();
+    if (!image) {
+      alert("이미지를 넣어주세요");
+    }
 
- const formData = new FormData();
-   formData.append('image',image)
-   try {
-     const response = await axios.put('https://four-cut.store/api/user', formData, {
-     headers: {
-       Authorization: `Bearer ${token}`,
-       "Content-Type": "multipart/form-data",
-       },
-     });
-     console.log(response);
-     // Only navigate if the post was successful
-     navigate(-1)
-   } catch (error) {
-     console.log(error);
-   }
-  }
+    const formData = new FormData();
+    formData.append("image", image);
+    try {
+      const response = await axios.put(
+        "https://four-cut.store/api/user",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response);
+      // Only navigate if the post was successful
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const onClickHandleSetModal = () => {
     setOpenModal(false);
   };
   return (
     <ProfileChangeModalAll>
-     
       <ProfileChangeModal>
         <div className="topX">
           <AiOutlineClose onClick={onClickHandleSetModal} />
         </div>
         <form className="full" onSubmit={onClickProfileUpdate}>
-        <div className="centerImg">
-             {addImg ? (
-             <div className="imageUploadSize">
-                 <img src={addImg} alt="" />
-               </div>
-              ) : (
-                <div className="images">
-                  <div className="imgUploadIcons">
-                  <AiOutlinePicture size="50"/>
-                  <RxVideo size="50"/>
-                  </div>
-                  <div className="imageText">사진과 동영상을 여기에 끌어다 놓으세요</div>
-                </div>
-               )}
-              {!addImg && (
-              <div className="button">
-              <label className="inputFileBtn"htmlFor="inputFile">
-                컴퓨터에서 선택
-              </label>
-                <input type="file" id="inputFile"accept='image/jpeg,image/jpg,image/png' onChange={upLoadImgHandler} />
+          <div className="centerImg">
+            {addImg ? (
+              <div className="imageUploadSize">
+                <img src={addImg} alt="" />
               </div>
-              )}
-        </div>
-        <div className="bottomBtn">
-          <button type="submit">Change</button>
-        </div>
+            ) : (
+              <div className="images">
+                <div className="imgUploadIcons">
+                  <AiOutlinePicture size="50" />
+                </div>
+                <div className="imageText">사진을 여기에 끌어다 놓으세요</div>
+              </div>
+            )}
+            {!addImg && (
+              <div className="button">
+                <label className="inputFileBtn" htmlFor="inputFile">
+                  컴퓨터에서 선택
+                </label>
+                <input
+                  type="file"
+                  id="inputFile"
+                  accept="image/jpeg,image/jpg,image/png"
+                  onChange={upLoadImgHandler}
+                />
+              </div>
+            )}
+          </div>
+          <div className="bottomBtn">
+            <button type="submit">Change</button>
+          </div>
         </form>
       </ProfileChangeModal>
     </ProfileChangeModalAll>
   );
 };
 const ProfileChangeModalAll = styled.div`
-  .topX{height:5%;padding-top:30px;}
+  .topX{width:5%;height:5%;}
   .full {
     width: 100%;
     height: 100vh;
@@ -147,6 +154,7 @@ const ProfileChangeModal = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    height:90%
   }
   .bottomBtn {
     display: flex;
@@ -170,12 +178,13 @@ const ProfileChangeModal = styled.div`
   }
   .centerImg>.images{width:100%;display:flex;flex-direction:column;align-items:center;}
   .images>.imageUploadIcons>svg{width:60;height:60;}
-  .centerImg>.imageUploadSize{width:100%;height:90%;object-fit:cover;}
+  .centerImg>.imageUploadSize{width:100%;height:100%;object-fit:cover;}
   .centerImg>.imageUploadSize>img{width:100%;height:100%;}
   .centerImg>.images>.imageText{margin-top:10px;}
   .centerImg>.button{margin-top:20px;}
   .centerImg>.button>.inputFileBtn {padding: 5px 7px;
   background-color:rgb(0,149,246);border-radius: 4px;color: white;cursor: pointer;font-size:15px;}
   .centerImg>.button>input{display:none;}
+  .full>.bottomBtn{margin-top:20px;}
 `;
 export default ProfileChange;

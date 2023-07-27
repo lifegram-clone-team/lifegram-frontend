@@ -13,7 +13,6 @@ const Main = () => {
         return posts.last ? undefined : posts.pageable.pageNumber + 2;
       },
     });
-  
   const handleObserver = useCallback(
     (entries) => {
       const [target] = entries;

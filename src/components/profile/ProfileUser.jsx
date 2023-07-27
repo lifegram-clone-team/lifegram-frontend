@@ -1,11 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { getUserInfo } from "../../api/api";
 import { useQuery } from "react-query";
+import { FaUserCog } from "react-icons/fa";
+import ProfileChange from "./ProfileChange";
 
 const ProfileUser = () => {
   const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
-  console.log(data);
+  const [modal, setModal] = useState(false);
+
+  const onClickHandleModal = () => {
+    setModal(!modal);
+  };
   return (
     <>
       {data && (
@@ -14,10 +20,19 @@ const ProfileUser = () => {
             <img src={data.profileImgUrl} alt="Personal Profile" />
           </ImgSection>
           <UserSection>
-            <div className="name">{data.userName}</div>
+            <div className="userProfile">
+              <div className="name">{data.userName}</div>
+              <FaUserCog onClick={onClickHandleModal} />
+            </div>
             <div className="postLength">게시물 {data.postCount}</div>
           </UserSection>
         </ProfileUserConatiner>
+      )}
+      {modal && (
+        <ProfileModal>
+          <div className="full"></div>
+          <ProfileChange />
+        </ProfileModal>
       )}
     </>
   );
@@ -51,6 +66,14 @@ const UserSection = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
+  .userProfile {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    svg {
+      font-size: 1.5rem;
+    }
+  }
   .name {
     font-size: 1.5rem;
   }
@@ -61,4 +84,5 @@ const UserSection = styled.div`
     }
   }
 `;
+const ProfileModal = styled.div``;
 export default ProfileUser;

@@ -26,7 +26,6 @@ import imageCompression from 'browser-image-compression';
    
     const token = localStorage.getItem("accessToken");
     const navigate=useNavigate()
-    // const queryClient = useQueryClient();
     const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
     console.log(data)
     
@@ -36,7 +35,7 @@ import imageCompression from 'browser-image-compression';
    
     try {
       const options = {
-        maxSizeMB:0.2,
+        maxSizeMB: 2,
         maxWidthOrHeight: 1000,
         useWebWorker: true,
       };
@@ -167,6 +166,8 @@ import imageCompression from 'browser-image-compression';
   )
 }
 const AddPost = styled.div`
+  width:100%;
+  height:100%;
   .addPostWrap{max-width:860px;max-height:758px;margin:0 auto;display:flex;flex-direction:column;align-items:center; width: 100%; height: 530px;padding-top:35px;}
 
   /* addPost 게시물 상단 공유하기 */
@@ -207,7 +208,9 @@ const AddPost = styled.div`
    .addPost>.addContents>.contents>p{position:absolute; width: 100%; display: flex; justify-content: flex-end;font-size:16px;}
    @media screen and (min-width:750px) and (max-width:1250px) {
     .addPostWrap{width:750px;height:550px;}
+    .addPostWrap>.postSharesWrap{margin-top:22px;}
     .addImg>.imageUploadSize{width:400px;height:400px;}
+    
    }
    @media screen and (min-width:501px)and (max-width:750px){
     .addPostWrap{width:650px;}
@@ -216,22 +219,25 @@ const AddPost = styled.div`
     .addPostWrap>.postSharesWrap>.addPost>.addContents{width:300px;}
    }
    @media screen and (max-width:500px){
-    .addPostWrap { max-width: 860px; max-height: 758px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; width: 100%; height:100%; overflow-x: hidden;}
-    .addPostWrap>.postSharesWrap{width:85%;height:580px;}
-    .addPostWrap>.postSharesWrap>.postShare{height:40px;padding-bottom:0;}
-    .addPostWrap>.postSharesWrap>.postShare>h4{font-size:18px;}
-   .addPostWrap>.postSharesWrap>.addPost{height:90%;flex-direction:column;overflow-x:hidden;}
-   .addPost>.addImg{width:100%;height:50%;}
+    .addPostWrap {width:100%;height:100%; overflow-x: hidden;padding-top:0;}
+    .addPostWrap>.postSharesWrap{width:85%;height:85%;margin-top:50px;}
+    .addPostWrap>.postSharesWrap>.postShare{ height: 5%; padding-bottom: 7px;display: flex;align-items: center;
+    justify-content: space-between;}
+    .addPostWrap>.postSharesWrap>.postShare>h4{font-size:14px;}
+   .addPostWrap>.postSharesWrap>.addPost{height:95%;flex-direction:column;overflow-x:hidden;}
+   .addPost>.addImg{width:100%;height:75%;}
+   .addImg>.imageUploadSize {width: 100%; height: 100%; object-fit: cover;}
+   .addImg>.imageUploadSize>img {width: 100%; height: 100%;}
    .addPost>.addImg>.images{min-height:140px;}
    .addPostWrap>.postSharesWrap>.addPost>.addImg>.images>.imageText{font-size:14px;}
    .addPost>.addImg>.button{margin-top:10px;}
    .addImg>.imageUploadSize{width:100%;height:100%;}
-   .hrXGvK .addImg>.imageUploadSize>img{width:100%;}
-   .addPostWrap>.postSharesWrap>.addPost>.addContents{width:100%;height: 50%;margin-top: 10px;}
-   .addPost>.addContents>.user{height: 13%; margin-top: 0;
-    align-items: center; justify-content: center;}
-   .addPost>.addContents>.contents{position:initial;}
-   .addPost>.addContents>.contents>p{height:10%;position:unset}
+   .hrXGvK .addImg>.imageUploadSize>img{width:100%;height:100%;object-fit:none;object-position: center;}
+   .addPostWrap>.postSharesWrap>.addPost>.addContents{width:100%;height: 30%;margin-top: 10px;}
+   .addPost>.addContents>.user{height: 15%; margin-top: 0; align-items: center; justify-content: center;}
+   .addPost>.addContents>.contents{width: 100%;height: 60%; position: relative; padding-top: 20px;}
+   .addPost>.addContents>.contents>textarea {height: 80%; min-height: 0;}
+   .addPost>.addContents>.contents>p{height:0;position:unset}
   }
   `
 
