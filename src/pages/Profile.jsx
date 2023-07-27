@@ -5,6 +5,7 @@ import ProfileLine from "../components/profile/ProfileLine";
 import ProfilePosts from "../components/profile/ProfilePosts";
 
 const Profile = () => {
+
   return (
     <HeaderMargin>
       <ProfileWrap>

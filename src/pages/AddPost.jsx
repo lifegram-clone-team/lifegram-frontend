@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Modal from "../hooks/modal";
-import styled from "styled-components";
-import ModalAdd from "../components/add/ModalAdd";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import Modal from '../hooks/modal';
+import styled from 'styled-components';
+import ModalAdd from '../components/add/ModalAdd';
+import { useNavigate } from 'react-router-dom';
 
 const AddPost = () => {
   const [showModalAdd, setShowModalAdd] = useState(true);
@@ -18,7 +18,7 @@ const AddPost = () => {
   return (
     <ModalAddAlls>
       <StbuttonBox onClick={() => onCloseHandler()}>X</StbuttonBox>
-      <div className="modalAfter">
+      <div className='modalAfter'>
         <ModalAdd />
         <Modal isOpen={isOpen} onClose={onCloseHandler}></Modal>
       </div>
@@ -83,20 +83,10 @@ const ModalAddAlls = styled.div`
       width: 100%;
       min-height: 200px;
     }
-    .addPostWrap
-      > .postSharesWrap
-      > .addPost
-      > .addImg
-      > .images
-      > .imgUploadIcons {
+    .addPostWrap > .postSharesWrap > .addPost > .addImg > .images > .imgUploadIcons {
       min-height: 140px;
     }
-    .addPostWrap
-      > .postSharesWrap
-      > .addPost
-      > .addImg
-      > .button
-      > .inputFileBtn {
+    .addPostWrap > .postSharesWrap > .addPost > .addImg > .button > .inputFileBtn {
       margin-top: 10px;
     }
   }

@@ -1,24 +1,22 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { styled } from "styled-components";
-import MainPost from "../components/main/MainPost";
-import PostSkeleton from "../components/main/mainLoding/PostSkeleton";
-import { getPosts } from "../api/api.js";
-import { useInfiniteQuery, useQuery } from "react-query";
-// main page
-const Main = () => {
-  // const [page, setPage] = useState(1);
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { styled } from 'styled-components';
+import MainPost from '../components/main/MainPost';
+import PostSkeleton from '../components/main/mainLoding/PostSkeleton';
+import { getPosts } from '../api/api.js';
+import { useInfiniteQuery, useQuery } from 'react-query';
 
-  // const { isLoading, error, data } = useQuery('mainPosts', () =>
-  //   getPosts(page)
-  // );
+const Main = () => {
   const observerElem = useRef(null);
-  console.log(observerElem);
-  const { data, isSuccess, fetchNextPage, hasNextPage, isLoading, isError } =
-    useInfiniteQuery("mainPosts", ({ pageParam = 1 }) => getPosts(pageParam), {
+  const { data, isSuccess, fetchNextPage, hasNextPage, isFetching, isError } = useInfiniteQuery(
+    'mainPosts',
+    ({ pageParam = 1 }) => getPosts(pageParam),
+    {
       getNextPageParam: (posts) => {
         return posts.last ? undefined : posts.pageable.pageNumber + 2;
       },
-    });
+    }
+  );
+
   const handleObserver = useCallback(
     (entries) => {
       const [target] = entries;
@@ -45,12 +43,11 @@ const Main = () => {
   return (
     <HeaderMain>
       <MainHeader>
-        {isLoading &&
+        {isFetching &&
           Array(3)
             .fill()
             .map((_, index) => <PostSkeleton key={index} />)}
-        {data &&
-          allPosts.map((post) => <MainPost key={post.postId} post={post} />)}
+        {data && allPosts.map((post) => <MainPost key={post.postId} post={post} />)}
         <div ref={observerElem}></div>
       </MainHeader>
     </HeaderMain>
