@@ -17,7 +17,7 @@ const ModifyPost = () => {
   return (
     <ModalModifyAlls>
       <StbuttonBox onClick={() => onCloseHandler()}>X</StbuttonBox>
-      <div className="modalAfter">
+      <div className='modalAfter'>
         <ModifyModal />
         <Modal isOpen={isOpen} onClose={onCloseHandler}></Modal>
       </div>
@@ -62,7 +62,7 @@ const ModalModifyAlls = styled.div`
     .modifyPost > .addContents > .user {
       height: 8%;
     }
-    .modifyPostWrap > .postSharesWrap > .modifyPost > .addImg > .images> .imageText {
+    .modifyPostWrap > .postSharesWrap > .modifyPost > .addImg > .images > .imageText {
       font-size: 15px;
     }
   }
@@ -87,10 +87,10 @@ const ModalModifyAlls = styled.div`
     .modifyPost > .addImg > img {
       width: 85%;
     }
-    .modifyPostWrap> .postSharesWrap> .modifyPost> .addImg> .images> .imgUploadIcons {
+    .modifyPostWrap > .postSharesWrap > .modifyPost > .addImg > .images > .imgUploadIcons {
       min-height: 140px;
     }
-    .modifyPostWrap> .postSharesWrap> .modifyPost> .addImg> .button> .inputFileBtn {
+    .modifyPostWrap > .postSharesWrap > .modifyPost > .addImg > .button > .inputFileBtn {
       margin-top: 10px;
     }
   }

@@ -1,19 +1,16 @@
-import { useMutation } from "react-query";
-import { useQueryClient } from "react-query";
-import { styled } from "styled-components";
-import { deleteComment } from "../../api/api";
+import { useMutation } from 'react-query';
+import { useQueryClient } from 'react-query';
+import { styled } from 'styled-components';
+import { deleteComment } from '../../api/api';
 
 const CommentContainer = ({ comment, postId }) => {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(
-    () => deleteComment(postId, comment.commentId),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("comments");
-      },
-    }
-  );
+  const { mutate } = useMutation(() => deleteComment(postId, comment.commentId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('comments');
+    },
+  });
 
   const onClickDeleteComment = () => {
     mutate();
@@ -22,19 +19,16 @@ const CommentContainer = ({ comment, postId }) => {
   return (
     <StCommentContainer>
       <StProImgContainer>
-        <img src={comment.writerImgUrl} alt="writerimg" />
+        <img src={comment.writerImgUrl} alt='writerimg' />
       </StProImgContainer>
       <StCommentBody>
         <StProfile>
           <span className="writer">{comment.writer}</span>
-          <div>{comment.content}</div>
+          <div className="commentContent">{comment.content}</div>
         </StProfile>
         <StTimeDelete>
-          <div className="time">{comment.createdAt}</div>
-          <span
-            className="delete"
-            onClick={() => onClickDeleteComment(postId, comment.commentId)}
-          >
+          <div className='time'>{comment.createdAt.slice(2, 10)}</div>
+          <span className='delete' onClick={() => onClickDeleteComment(postId, comment.commentId)}>
             삭제
           </span>
         </StTimeDelete>
@@ -81,9 +75,12 @@ const StProfile = styled.div`
   font-size: 16px;
   padding-right: 15px;
   margin-bottom: 5px;
-
   .writer {
     font-weight: 700;
+  }
+  .commentContent {
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
 `;
 

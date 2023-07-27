@@ -1,21 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useInfiniteQuery } from "react-query";
-import { styled } from "styled-components";
-import { getUserPosts } from "../../api/api";
-import { Link } from "react-router-dom";
-import ProfileBox from "./ProfileBox";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useInfiniteQuery } from 'react-query';
+import { styled } from 'styled-components';
+import { getUserPosts } from '../../api/api';
+import { Link } from 'react-router-dom';
+import ProfileBox from './ProfileBox';
 
 const ProfilePosts = () => {
   const observerElem = useRef(null);
-  const {
-    data,
-    isSuccess,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isError,
-  } = useInfiniteQuery(
-    "mainPosts",
+  const { data, isSuccess, fetchNextPage, hasNextPage, isFetchingNextPage, isError } = useInfiniteQuery(
+    'mainPosts',
     ({ pageParam = 1 }) => getUserPosts(pageParam),
     {
       getNextPageParam: (posts) => {
@@ -27,7 +20,7 @@ const ProfilePosts = () => {
     (entries) => {
       const [target] = entries;
       if (target.isIntersecting && hasNextPage) {
-        console.log("next page");
+        console.log('next page');
         fetchNextPage();
       }
     },
@@ -45,17 +38,11 @@ const ProfilePosts = () => {
 
   // 모든 페이지의 데이터를 하나의 배열로 합치기
   const allPosts = data?.pages.flatMap((page) => page.content) || [];
-  data && console.log("allpost", allPosts);
+  data && console.log('allpost', allPosts);
 
   return (
     <ProfilePostsWrap>
-      {allPosts &&
-        allPosts.map((post) => (
-          <ProfileBox
-            key={post.postId}
-            post={post}      
-          />
-        ))}
+      {allPosts && allPosts.map((post) => <ProfileBox key={post.postId} post={post} />)}
       <div ref={observerElem}></div>
     </ProfilePostsWrap>
   );

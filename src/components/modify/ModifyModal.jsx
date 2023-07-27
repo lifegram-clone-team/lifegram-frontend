@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import useInput from "../../hooks/useInput";
-import styled from "styled-components";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { createPost, getPostDetail } from "../../api/api";
-import { getUserInfo } from "../../api/api";
+import React, { useEffect, useState } from 'react';
+import useInput from '../../hooks/useInput';
+import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { createPost, getPostDetail } from '../../api/api';
+import { getUserInfo } from '../../api/api';
 
 
 
@@ -24,6 +24,7 @@ const ModifyModal = () => {
   const navigate = useNavigate();
 
   const onModifyPost = async (e) => {
+    const URL = process.env.REACT_APP_API_URI;
     e.preventDefault();
     const contents = {
       content,
@@ -44,7 +45,7 @@ const ModifyModal = () => {
     const maxLength = 2200;
 
     if (content.length > maxLength) {
-      alert("최대 2200자까지 입력 가능합니다.");
+      alert('최대 2200자까지 입력 가능합니다.');
       e.target.value = content.substring(0, maxLength); // Truncate the content to the maximum length
     }
 
@@ -53,42 +54,42 @@ const ModifyModal = () => {
   };
   return (
     <ModifyPosts>
-      <form className="modifyPostWrap" onSubmit={onModifyPost}>
-        <div className="postSharesWrap">
-          <div className="postShare">
-            <button type="button" onClick={clickPrevHandler}>
+      <form className='modifyPostWrap' onSubmit={onModifyPost}>
+        <div className='postSharesWrap'>
+          <div className='postShare'>
+            <button type='button' onClick={clickPrevHandler}>
               취소
             </button>
             <h4>새 게시물 공유하기</h4>
-            <div className="finishBtn">
-              <button type="submit">완료</button>
+            <div className='finishBtn'>
+              <button type='submit'>완료</button>
             </div>
           </div>
-          <div className="modifyPost">
-            <div className="addImg">
-              <img src={postDetailData?.postImgUrl} alt="" />
+          <div className='modifyPost'>
+            <div className='addImg'>
+              <img src={postDetailData?.postImgUrl} alt='' />
             </div>
-            <div className="addContents">
-              <div className="user">
-                <div className="userProfile">
-                  <div className="userImg">
-                    <img src={data?.profileImgUrl} alt="" />
+            <div className='addContents'>
+              <div className='user'>
+                <div className='userProfile'>
+                  <div className='userImg'>
+                    <img src={data?.profileImgUrl} alt='' />
                   </div>
                   <p>{data?.userName}</p>
                 </div>
               </div>
-              <div className="contents">
+              <div className='contents'>
                 <textarea
-                  cols="30"
-                  rows={content.length > 500 ? "20" : "10"}
-                  placeholder="문구 입력"
-                  maxLength="2200"
+                  cols='30'
+                  rows={content.length > 500 ? '20' : '10'}
+                  placeholder='문구 입력'
+                  maxLength='2200'
                   value={content}
                   onChange={handleContentsChange}
                   onInput={checkContents}
-                  className="content"
+                  className='content'
                 >
-                  {inputCount > 2200 ? "errorText" : ""}{" "}
+                  {inputCount > 2200 ? 'errorText' : ''}{' '}
                 </textarea>
                 <p>
                   <span>{inputCount}</span>

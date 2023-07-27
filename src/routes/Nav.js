@@ -13,13 +13,13 @@ import Detail from "../pages/Detail";
 
 
 const Nav = () => {
-  const user = Boolean(localStorage.getItem("accessToken"));
+  const user = Boolean(localStorage.getItem('accessToken'));
 
   return (
     <Routes>
       <Route element={<NotAuthRoutes user={user} />}>
-        <Route path="/" element={<Signin />} />
-        <Route path="/register" element={<Signup />} />
+        <Route path='/' element={<Signin />} />
+        <Route path='/register' element={<Signup />} />
       </Route>
 
       <Route element={<AuthRoutes user={user} />}>
@@ -32,7 +32,7 @@ const Nav = () => {
       <Route path='/modify/:id' element={<ModifyPost />} />
       </Route>
 
-      <Route path={"/*"} element={<div>404</div>} />
+      <Route path={'/*'} element={<div>404</div>} />
     </Routes>
   );
 };
