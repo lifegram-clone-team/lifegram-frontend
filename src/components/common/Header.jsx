@@ -22,7 +22,6 @@ const Header = () => {
   };
   const reloadClickHandler = () => {
     window.location.href = '/profile';
-    console.log('hi');
   };
   return (
     <PageContainer>
@@ -175,6 +174,7 @@ const StLink = styled.div`
   box-sizing: border-box;
   font-size: 1rem;
   text-decoration-line: none;
+  cursor: pointer;
   img {
     border-radius: 50%;
     width: 24px;

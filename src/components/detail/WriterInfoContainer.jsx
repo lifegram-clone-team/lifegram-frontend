@@ -7,16 +7,6 @@ const WriterInfoContainer = ({
   createdAt,
   media,
 }) => {
-  content &&
-    console.log(
-      "WriterInfoContainer",
-      writerImgUrl,
-      writer,
-      content,
-      createdAt,
-      media
-    );
-
   return (
     <StProfileContainer media={media}>
       <div className="lineContent">
@@ -28,7 +18,7 @@ const WriterInfoContainer = ({
             <span className="writer">{writer}</span>
             <span className="content">{content}</span>
           </StWriterContent>
-          <div className="time">{createdAt && createdAt.slice(0, 10)}</div>
+          <div className="time">{createdAt && createdAt.slice(2, 10)}</div>
         </StProBodyContainer>
       </div>
     </StProfileContainer>
@@ -58,7 +48,8 @@ const StProfileContainer = styled.div`
   }
   .time {
     margin-top: 10px;
-    margin-left: auto;
+    margin-right: auto;
+    margin-left: 10px;
     color: gray;
   }
 `;

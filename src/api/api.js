@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { notification } from 'antd';
 
 const URL = process.env.REACT_APP_API_URI;
 const token = localStorage.getItem('accessToken');
 
+//회원가입
 const registerPost = async (formData) => {
   try {
     const response = await axios.post(`${URL}/auth/signup`, formData);
@@ -12,6 +14,8 @@ const registerPost = async (formData) => {
     throw new Error('사용자 생성 오류:', error);
   }
 };
+
+//로그인
 const loginPost = async (formData) => {
   try {
     const response = await axios.post(`${URL}/auth/login`, formData);
@@ -23,13 +27,11 @@ const loginPost = async (formData) => {
 
 //전체 게시물 조회
 const getPosts = async (pageNum) => {
-  console.log('게시물 조회');
   const response = await axios.get(`${URL}/post?page=${pageNum}&size=5`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log('getTodos response', response);
   return response.data;
 };
 
@@ -46,7 +48,9 @@ const createPost = async (newPost) => {
   })
     .then((res) => {
       if (res.status === 200) {
-        alert('게시글이 작성됐어요');
+        notification.warning({
+          message: '게시글이 작성됐어요.',
+        });
       }
     })
     .catch((err) => console.log(err));
@@ -59,7 +63,6 @@ const getPostDetail = async (postId) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response);
   return response.data;
 };
 
@@ -97,17 +100,6 @@ const updateIsLike = async (postId) => {
     })
     .catch((err) => console.log(err));
 };
-// const updateIsLike = async (postId) => {
-//   try {
-//     await axios.put(`${URL}/post/${postId}/like`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//   } catch (err) {
-//     throw err;
-//   }
-// };
 
 // 게시글 수정
 const updateEditPost = async (postId, newPost) => {
@@ -130,8 +122,6 @@ const updateEditPost = async (postId, newPost) => {
 
 // 댓글 작성
 const createComment = async (postId, newComment) => {
-  console.log(`댓글작성, id: ${postId}, newComment: ${newComment}`);
-
   await axios({
     url: `${URL}/post/${postId}/comment`,
     method: 'POST',
@@ -139,11 +129,13 @@ const createComment = async (postId, newComment) => {
       Authorization: `Bearer ${token}`,
     },
     data: { content: newComment },
-    // withCredentials: true,
   })
     .then((res) => {
       if (res.status === 200) {
         alert('댓글이 작성됐어요');
+        // notification.success({
+        //   message: '댓글이 작성됐어요.',
+        // });
       }
     })
     .catch((err) => console.log(err));
@@ -151,7 +143,6 @@ const createComment = async (postId, newComment) => {
 
 // 댓글 삭제
 const deleteComment = async (postId, commentId) => {
-  console.log('deleteComment commentId=', commentId);
   await axios({
     url: `${URL}/post/${postId}/comment/${commentId}`,
     method: 'DELETE',
@@ -174,7 +165,6 @@ const getUserInfo = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response);
   return response.data;
 };
 
@@ -185,7 +175,6 @@ const getUserPosts = async (pageNum, size = 12) => {
       Authorization: `Bearer ${token}`,
     },
   });
-  // console.log(response);
   return response.data;
 };
 

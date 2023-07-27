@@ -27,7 +27,6 @@ const Signup = () => {
   };
   const mutation = useMutation(registerPost, {
     onSuccess: (data) => {
-      console.log(data);
       navigate('/');
     },
     onError: (error) => {

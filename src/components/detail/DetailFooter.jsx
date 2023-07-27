@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { BsHeart, BsHeartFill, BsChat } from "react-icons/bs";
 import { useMutation } from "react-query";
 import { useQueryClient } from "react-query";
 import { styled } from "styled-components";
+import { notification } from 'antd';
 import { createComment, updateIsLike } from "../../api/api";
 
 const DetailFooter = ({ like, likeCount, commentCreatedAt, id }) => {
-  console.log("detailFooter", like, likeCount, commentCreatedAt, id);
-
+  const inputRef = useRef(null);
   //useState, onchange input
   const [comment, setComment] = useState("");
   const onChangeComment = (e) => {
@@ -38,11 +38,19 @@ const DetailFooter = ({ like, likeCount, commentCreatedAt, id }) => {
 
   const onClickPostComment = () => {
     if (comment.length === 0) {
-      alert("댓글을 입력하세요");
+      // alert("댓글을 입력하세요");
+      notification.warning({
+        message: '댓글을 입력하세요.',
+      });
+    } else{
+      createCommentMutate();
+      setComment("");
     }
-    createCommentMutate();
-    setComment("");
   };
+
+  const onClickComment = () => {
+    inputRef.current.focus();
+  }
 
   return (
     <StFooter>
@@ -52,16 +60,18 @@ const DetailFooter = ({ like, likeCount, commentCreatedAt, id }) => {
             onClick={() => onClickUpdateIsLike()}
             size="26"
             color="red"
+            className="icon"            
           />
         ) : (
-          <BsHeart onClick={() => onClickUpdateIsLike()} size="26" />
+          <BsHeart onClick={() => onClickUpdateIsLike()} size="26" className="icon"     />
         )}
-        <BsChat size="26" />
+        <BsChat size="26" onClick={onClickComment} className="icon"    />
       </StIconContainer>
       <div className="like">{`좋아요 ${formatLikeCount}개`}</div>
       <div className="time main">{commentCreatedAt}</div>
       <input
         value={comment}
+        ref={inputRef}
         onChange={onChangeComment}
         placeholder="댓글 달기..."
       />
@@ -113,6 +123,16 @@ const StIconContainer = styled.div`
 
   display: flex;
   gap: 20px;
+
+  svg{
+    cursor: pointer;
+  }
+  .icon {
+    &:hover {
+      color: #848484;
+      transform: scale(1.2);
+  }
+}
 `;
 
 const StPosition = styled.div`
