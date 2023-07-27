@@ -46,6 +46,7 @@ const Detail = () => {
   }
   return (
     <HeaderMargin>
+    {data && profilePost && userData && (
       <ProfileWrap>
         <ProfileContainer>
           <StDetailContainer>
@@ -109,6 +110,7 @@ const Detail = () => {
           </ProfilePostsWrap>
         </ProfileContainer>
       </ProfileWrap>
+    )}
     </HeaderMargin>
   );
 };

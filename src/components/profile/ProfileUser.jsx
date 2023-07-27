@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { getUserInfo } from "../../api/api";
 import { useQuery } from "react-query";
@@ -9,9 +9,21 @@ const ProfileUser = () => {
   const { isLoading, error, data } = useQuery("profileUserImg", getUserInfo);
   const [modal, setModal] = useState(false);
 
-  const onClickHandleModal = () => {
+  const onToggleHandler = () => {
     setModal(!modal);
   };
+
+  useEffect(() => {
+    if (modal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto"; 
+    };
+  }, [modal]);
+
   return (
     <>
       {data && (
@@ -22,7 +34,7 @@ const ProfileUser = () => {
           <UserSection>
             <div className="userProfile">
               <div className="name">{data.userName}</div>
-              <FaUserCog onClick={onClickHandleModal} />
+              <FaUserCog onClick={onToggleHandler} />
             </div>
             <div className="postLength">게시물 {data.postCount}</div>
           </UserSection>
@@ -30,8 +42,8 @@ const ProfileUser = () => {
       )}
       {modal && (
         <ProfileModal>
-          <div className="full"></div>
-          <ProfileChange />
+          <div className="fullAll"></div>
+          <ProfileChange onToggleHandler= {onToggleHandler} />
         </ProfileModal>
       )}
     </>
@@ -72,6 +84,7 @@ const UserSection = styled.div`
     align-items: center;
     svg {
       font-size: 1.5rem;
+      cursor: pointer;
     }
   }
   .name {
@@ -84,5 +97,16 @@ const UserSection = styled.div`
     }
   }
 `;
-const ProfileModal = styled.div``;
+const ProfileModal = styled.div`
+display: flex;
+
+.fullAll{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+`;
 export default ProfileUser;

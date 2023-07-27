@@ -7,7 +7,7 @@ import useInput from "../../hooks/useInput";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ProfileChange = () => {
+const ProfileChange = ({onToggleHandler}) => {
   const [fileImg, setFileImg] = useState("");
   const [addImg, setAddImg] = useInput("");
   const [image, setImage] = useState(null);
@@ -45,9 +45,6 @@ const ProfileChange = () => {
 
   const onClickProfileUpdate = async (e) => {
     e.preventDefault();
-    if (!image) {
-      alert("이미지를 넣어주세요");
-    }
 
     const formData = new FormData();
     formData.append("image", image);
@@ -62,21 +59,17 @@ const ProfileChange = () => {
           },
         }
       );
-      console.log(response);
-      // Only navigate if the post was successful
-      navigate(-1);
+      window.location.reload()
     } catch (error) {
       console.log(error);
     }
   };
-  const onClickHandleSetModal = () => {
-    setOpenModal(false);
-  };
+
   return (
     <ProfileChangeModalAll>
       <ProfileChangeModal>
         <div className="topX">
-          <AiOutlineClose onClick={onClickHandleSetModal} />
+          <AiOutlineClose onClick={onToggleHandler} />
         </div>
         <form className="full" onSubmit={onClickProfileUpdate}>
           <div className="centerImg">
@@ -114,21 +107,22 @@ const ProfileChange = () => {
     </ProfileChangeModalAll>
   );
 };
+
 const ProfileChangeModalAll = styled.div`
-  .topX{width:5%;height:5%;}
+  .topX{width:5%;height:5%;padding-bottom: 9px;}
   .full {
-    width: 100%;
-    height: 100vh;
+    width:100%;
+    max-height:750px;
+    height:100%;
     inset: 0px;
-    position: relative;
     display:flex;
     flex-direction:column;
-    /* background-color: rgba(0, 0, 0, 0.6); */
+    /* background-color: rgba(0, 0, 0, 0.5); */
   }
 `;
 const ProfileChangeModal = styled.div`
   width: 600px;
-  height: 800px;
+  height: 700px;
   background-color: white;
   z-index: 100;
   position: absolute;
@@ -178,13 +172,13 @@ const ProfileChangeModal = styled.div`
   }
   .centerImg>.images{width:100%;display:flex;flex-direction:column;align-items:center;}
   .images>.imageUploadIcons>svg{width:60;height:60;}
-  .centerImg>.imageUploadSize{width:100%;height:100%;object-fit:cover;}
-  .centerImg>.imageUploadSize>img{width:100%;height:100%;}
+  .centerImg>.imageUploadSize{width:100%;height:90%;}
+  .centerImg>.imageUploadSize>img{width:100%;height:100%;object-fit:cover;}
   .centerImg>.images>.imageText{margin-top:10px;}
   .centerImg>.button{margin-top:20px;}
   .centerImg>.button>.inputFileBtn {padding: 5px 7px;
   background-color:rgb(0,149,246);border-radius: 4px;color: white;cursor: pointer;font-size:15px;}
   .centerImg>.button>input{display:none;}
-  .full>.bottomBtn{margin-top:20px;}
+  .full>.bottomBtn{margin-top:10px;}
 `;
 export default ProfileChange;

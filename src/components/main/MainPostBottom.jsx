@@ -140,6 +140,7 @@ const MainPostIcons = styled.div`
     font-weight: bold;
     padding: 10px 10px 8px 10px;
     transition: all 0.1s linear;
+    cursor: pointer;
     &:hover {
       transform: scale(1.2);
     }

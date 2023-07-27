@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useInput from '../../hooks/useInput';
 import styled from 'styled-components';
 import axios from 'axios';
+import { notification } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { createPost, getPostDetail } from '../../api/api';
@@ -17,7 +18,6 @@ const ModifyModal = () => {
 
   const token = localStorage.getItem("accessToken");
   const { data } = useQuery("profileUserImg", getUserInfo);
-  console.log(data)
   const { data: postDetailData } = useQuery("postDetail", () =>
     getPostDetail(id)
   );
@@ -34,7 +34,7 @@ const ModifyModal = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    navigate(-1);
+    navigate(`/post/${id}`);
   };
 
   const clickPrevHandler = () => {
@@ -45,7 +45,11 @@ const ModifyModal = () => {
     const maxLength = 2200;
 
     if (content.length > maxLength) {
-      alert('최대 2200자까지 입력 가능합니다.');
+      // alert('최대 2200자까지 입력 가능합니다.');
+      notification.warning({
+        message: '최대 2200자까지 입력 가능합니다.',
+      });
+      
       e.target.value = content.substring(0, maxLength); // Truncate the content to the maximum length
     }
 
